@@ -60,10 +60,10 @@ namespace Web.Controllers
 
         public IActionResult OrderStart()
         {
-            
-            
-            
-            return View("OrderStart");
+
+
+
+            return Ok();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
