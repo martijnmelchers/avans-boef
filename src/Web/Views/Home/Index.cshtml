@@ -17,17 +17,17 @@
             @using (Html.BeginForm("Index", "Home", FormMethod.Post))
             {
                 @Html.ValidationSummary(true, "<b>Er ging iets niet goed!<b>", new { @class = "alert alert-danger no-list" })
-                
+
                 <div class="form-group">
-                    @Html.LabelFor(x => x.BookingDate)<br/>
+                    @Html.LabelFor(x => x.BookingDate)<br />
                     @Html.EditorFor(x => x.BookingDate, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
 
-                <input class="btn btn-success" type="submit" value="Boeken"/>
+                <input class="btn btn-success" type="submit" value="Boeken" />
             }
         </div>
         <div class="col-lg-6">
-            <img src="images/field.png" alt="Veld met beestjes"/>
+            <img src="images/field.png" alt="Veld met beestjes" />
         </div>
     </div>
 </div>

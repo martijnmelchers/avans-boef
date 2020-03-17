@@ -1,12 +1,10 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using DomainServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Models.Exceptions;
 using Models.Form;
-using Newtonsoft.Json;
 using Web.Models;
 
 namespace Web.Controllers
