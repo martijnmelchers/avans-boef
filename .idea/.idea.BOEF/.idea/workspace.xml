@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c1ea6ec2-37c4-4fdb-9789-13af153a251c" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/UnitTests/UnitTest1.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Migrations/ApplicationDbContextModelSnapshot.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Areas/Identity/Pages/Account/ExternalLogin.cshtml.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Areas/Identity/Pages/Account/ExternalLogin.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Areas/Identity/Pages/Account/ForgotPasswordConfirmation.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Areas/Identity/Pages/Account/Login.cshtml.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Models/Exceptions/BookingNotFoundException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Views/Shared/_LoginPartial.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Views/Home/Index.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Areas/Identity/Pages/Account/Login.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Controllers/BookingController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Views/Home/Privacy.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/DB9CEB1E-F6C3-448D-8D4A-C9F8963779FB/27/Exception.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/wwwroot/lib/jquery/dist/jquery.min.map" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/DomainServices/BookingService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Migrations/20200227154616_AddDate.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Areas/Identity/Pages/_ViewImports.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Views/_ViewImports.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/DomainServices/Interfaces/IBookingService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Models/Repository/Interfaces/IBookingRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Areas/Identity/Pages/_ViewStart.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/233E8C8F-0E85-4B63-AE7F-9B374A12D146/C/Controller.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Controllers/BaseController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/33D7AAA8-CB58-49A4-8EEE-CFF73A6C7E61/2/Host.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/CCD71D5C-6409-42FE-B7D4-84249D40542B/1/MvcServiceCollectionExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/87385B6C-D1BB-455D-9551-BA687B0E3896/2/IdentityDbContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Startup.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Controllers/HomeController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Views/_ViewStart.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/appsettings.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Areas/Identity/Pages/Account/Manage/_Layout.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Models/ApplicationDbContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Areas/Identity/IdentityHostingStartup.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Models/Form/DateSelection.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/F2ACE85F-6C10-49DB-8CAC-F03079CCDA72/32/FromBodyAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/495675DD-EE41-4F21-9A09-946F33439B74/F/SignInManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Models/Exceptions/InvalidDateException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/27B9A50E-3212-4D6D-AEBD-8E4CCD63DB08/06/4e2068ad/RazorPagesEndpointRouteBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/AAE280E8-80DB-4E62-9869-77BC009FDE17/2B/ActionExecutingContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E9BDBB73-53B2-465B-B3B7-E2006463A5DC/B/RazorPage.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/55FC5F53-AC65-4AB9-BD09-716838507C52/7C/ViewDataDictionary.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Views/Home/OrderStart.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Models/ErrorViewModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Views/Shared/_ValidationScriptsPartial.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Views/Shared/_Layout.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Views/Shared/Error.cshtml" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Models/Repository/Interfaces/IBaseRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/appsettings.Development.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BOEF/Migrations/20200226190614_Initial.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Models/Repository/BookingRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Models/Booking.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/BOEF/Views/Home/Order.cshtml" />
+        <option value="$PROJECT_DIR$/BOEF/Views/Home/OrderStart.cshtml.cs" />
+        <option value="$PROJECT_DIR$/BOEF/Views/Home/OrderStart.cshtml" />
+        <option value="$PROJECT_DIR$/BOEF/Models/Booking.cs" />
+        <option value="$PROJECT_DIR$/BOEF/Data/ApplicationDbContext.cs" />
+        <option value="$PROJECT_DIR$/BOEF/Models/Repository/IBaseRepository.cs" />
+        <option value="$PROJECT_DIR$/BOEF/Models/Repository/BookingRepository.cs" />
+        <option value="$PROJECT_DIR$/src/Models/Program.cs" />
+        <option value="$PROJECT_DIR$/src/Models/Repository/IBaseRepository.cs" />
+        <option value="$PROJECT_DIR$/src/Models/Repository/BaseRepository.cs" />
+        <option value="$PROJECT_DIR$/src/UnitTests/UnitTest1.cs" />
+        <option value="$PROJECT_DIR$/src/DomainServices/Class1.cs" />
+        <option value="$PROJECT_DIR$/BOEF/Models/CookieService.cs" />
+        <option value="$PROJECT_DIR$/BOEF/Program.cs" />
+        <option value="$PROJECT_DIR$/src/Models/ApplicationDbContext.cs" />
+        <option value="$PROJECT_DIR$/BOEF/Views/_ViewImports.cshtml" />
+        <option value="$PROJECT_DIR$/BOEF/appsettings.json" />
+        <option value="$PROJECT_DIR$/BOEF/Areas/Identity/Pages/Account/Manage/_Layout.cshtml" />
+        <option value="$PROJECT_DIR$/BOEF/Controllers/OrderController.cs" />
+        <option value="$PROJECT_DIR$/src/Models/Repository/Interfaces/IBookingRepository.cs" />
+        <option value="$PROJECT_DIR$/src/Models/Repository/BookingRepository.cs" />
+        <option value="$PROJECT_DIR$/src/DomainServices/Interfaces/IBookingService.cs" />
+        <option value="$PROJECT_DIR$/src/Models/Booking.cs" />
+        <option value="$PROJECT_DIR$/src/Models/Exceptions/BookingNotFoundException.cs" />
+        <option value="$PROJECT_DIR$/BOEF/Startup.cs" />
+        <option value="$PROJECT_DIR$/src/Models/Form/DateSelection.cs" />
+        <option value="$PROJECT_DIR$/src/Models/Exceptions/InvalidDateException.cs" />
+        <option value="$PROJECT_DIR$/src/DomainServices/BookingService.cs" />
+        <option value="$PROJECT_DIR$/BOEF/Controllers/BaseController.cs" />
+        <option value="$PROJECT_DIR$/BOEF/Controllers/BookingController.cs" />
+        <option value="$PROJECT_DIR$/BOEF/wwwroot/css/site.css" />
+        <option value="$PROJECT_DIR$/BOEF/Views/Home/Index.cshtml" />
+        <option value="$PROJECT_DIR$/BOEF/Controllers/HomeController.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1YLQKo7TOhC2w24LlZGfE5aNRnP" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Rider.SolutionExplorerActivator" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="dotnet" />
+    </option>
+  </component>
+  <component name="RunManager" selected=".NET Launch Settings Profile.BOEF">
+    <configuration name="BOEF" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/BOEF/BOEF.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value=".NETCoreApp,Version=v3.1" />
+      <option name="LAUNCH_PROFILE_NAME" value="BOEF" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <method v="2">
+        <option name="Build" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BOEF: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/BOEF/BOEF.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value=".NETCoreApp,Version=v3.1" />
+      <option name="LAUNCH_PROFILE_NAME" value="IIS Express" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <method v="2">
+        <option name="Build" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c1ea6ec2-37c4-4fdb-9789-13af153a251c" name="Default Changelist" comment="" />
+      <created>1582719333980</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1582719333980</updated>
+      <workItem from="1582719336724" duration="800000" />
+      <workItem from="1582727586555" duration="8699000" />
+      <workItem from="1582743317782" duration="1451000" />
+      <workItem from="1582811437397" duration="7607000" />
+      <workItem from="1582979991471" duration="8230000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="WindowStateProjectService">
+    <state x="715" y="223" key="#xdebugger.evaluate" timestamp="1582982105236">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="715" y="223" key="#xdebugger.evaluate/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582982105236" />
+    <state width="684" height="466" key="DebuggerActiveHint" timestamp="1582984850940">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="684" height="466" key="DebuggerActiveHint/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582984850940" />
+    <state width="1877" height="348" key="GridCell.Tab.0.bottom" timestamp="1582988457509">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582988457509" />
+    <state width="1877" height="348" key="GridCell.Tab.0.center" timestamp="1582988457509">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582988457509" />
+    <state width="1877" height="348" key="GridCell.Tab.0.left" timestamp="1582988457509">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582988457509" />
+    <state width="1877" height="348" key="GridCell.Tab.0.right" timestamp="1582988457509">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582988457509" />
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1582988457509">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582988457509" />
+    <state width="1877" height="348" key="GridCell.Tab.1.center" timestamp="1582988457509">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.center/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582988457509" />
+    <state width="1877" height="348" key="GridCell.Tab.1.left" timestamp="1582988457509">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.left/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582988457509" />
+    <state width="1877" height="348" key="GridCell.Tab.1.right" timestamp="1582988457509">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.right/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582988457509" />
+    <state width="1877" height="348" key="GridCell.Tab.2.bottom" timestamp="1582988457509">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.2.bottom/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582988457509" />
+    <state width="1877" height="348" key="GridCell.Tab.2.center" timestamp="1582988457509">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.2.center/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582988457509" />
+    <state width="1877" height="348" key="GridCell.Tab.2.left" timestamp="1582988457509">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.2.left/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582988457509" />
+    <state width="1877" height="348" key="GridCell.Tab.2.right" timestamp="1582988457509">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.2.right/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582988457509" />
+    <state width="1877" height="348" key="GridCell.Tab.3.bottom" timestamp="1582988457509">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.3.bottom/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582988457509" />
+    <state width="1877" height="348" key="GridCell.Tab.3.center" timestamp="1582988457509">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.3.center/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582988457509" />
+    <state width="1877" height="348" key="GridCell.Tab.3.left" timestamp="1582988457509">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.3.left/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582988457509" />
+    <state width="1877" height="348" key="GridCell.Tab.3.right" timestamp="1582988457509">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.3.right/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582988457509" />
+    <state width="1877" height="348" key="GridCell.Tab.4.bottom" timestamp="1582988457509">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.4.bottom/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582988457509" />
+    <state width="1877" height="348" key="GridCell.Tab.4.center" timestamp="1582988457509">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.4.center/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582988457509" />
+    <state width="1877" height="348" key="GridCell.Tab.4.left" timestamp="1582988457509">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.4.left/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582988457509" />
+    <state width="1877" height="348" key="GridCell.Tab.4.right" timestamp="1582988457509">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.4.right/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582988457509" />
+    <state x="552" y="253" key="Rider.ProjectTemplateDialog.Size" timestamp="1582733837535">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Rider.ProjectTemplateDialog.Size/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582733837535" />
+    <state x="676" y="211" key="RiderGenerateDialog" timestamp="1582735345863">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="676" y="211" key="RiderGenerateDialog/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582735345863" />
+    <state width="254" height="198" key="RunAnythingAction_Filter_Popup" timestamp="1582727952060">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="254" height="198" key="RunAnythingAction_Filter_Popup/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582727952060" />
+    <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1582982130699">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="968" height="528" key="XDebugger.FullValuePopup/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582982130699" />
+    <state x="638" y="252" width="644" height="536" key="find.popup" timestamp="1582727823392">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="638" y="252" width="644" height="536" key="find.popup/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582727823392" />
+    <state x="615" y="246" width="672" height="677" key="run.anything.popup" timestamp="1582818070254">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="615" y="246" width="672" height="677" key="run.anything.popup/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582818070254" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1582730116010">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.8.1920.1040@0.0.1920.1040" timestamp="1582730116010" />
+  </component>
+</project>
