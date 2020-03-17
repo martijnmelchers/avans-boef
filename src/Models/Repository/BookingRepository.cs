@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -8,46 +8,46 @@ using Models.Repository.Interfaces;
 
 namespace Models.Repository
 {
-    public class BookingRepository : IBookingRepository
+    public class BeestjeRepository : IBeestjeRepository
     {
         private readonly ApplicationDbContext _db;
 
-        public BookingRepository(ApplicationDbContext db)
+        public BeestjeRepository(ApplicationDbContext db)
         {
             _db = db;
         }
         
-        public async Task<Booking> Get(int id)
+        public async Task<Beestje> Get(int id)
         {
-            return await _db.Bookings.FirstOrDefaultAsync(x => x.Id == id);
+            return await _db.Beestjes.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<List<Booking>> GetAll()
+        public async Task<List<Beestje>> GetAll()
         {
-            return await _db.Bookings.ToListAsync();
+            return await _db.Beestjes.ToListAsync();
         }
 
-        public async Task<Booking> GetWhere(Expression<Func<Booking, bool>> expression)
+        public async Task<Beestje> GetWhere(Expression<Func<Beestje, bool>> expression)
         {
-            return await _db.Bookings.FirstOrDefaultAsync(expression);
+            return await _db.Beestjes.FirstOrDefaultAsync(expression);
         }
 
-        public async Task<List<Booking>> GetAllWhere(Expression<Func<Booking, bool>> expression)
+        public async Task<List<Beestje>> GetAllWhere(Expression<Func<Beestje, bool>> expression)
         {
-            return await _db.Bookings.Where(expression).ToListAsync();
+            return await _db.Beestjes.Where(expression).ToListAsync();
         }
 
-        public async Task<Booking> Insert(Booking item)
+        public async Task<Beestje> Insert(Beestje item)
         {
-            await _db.Bookings.AddAsync(item);
+            await _db.Beestjes.AddAsync(item);
             await _db.SaveChangesAsync();
 
             return item;
         }
 
-        public async Task<List<Booking>> InsertAll(List<Booking> items)
+        public async Task<List<Beestje>> InsertAll(List<Beestje> items)
         {
-            await _db.Bookings.AddRangeAsync(items);
+            await _db.Beestjes.AddRangeAsync(items);
             await _db.SaveChangesAsync();
 
             return items;
@@ -55,19 +55,14 @@ namespace Models.Repository
 
         public async Task Delete(int id)
         {
-            _db.Bookings.Remove(await Get(id));
+            _db.Beestjes.Remove(await Get(id));
             await _db.SaveChangesAsync();
         }
 
-        public async Task DeleteWhere(Expression<Func<Booking, bool>> expression)
+        public async Task DeleteWhere(Expression<Func<Beestje, bool>> expression)
         {
-            _db.Bookings.RemoveRange(await GetAllWhere(expression));
+            _db.Beestjes.RemoveRange(await GetAllWhere(expression));
             await _db.SaveChangesAsync();
-        }
-
-        public async Task<Booking> GetByAccessToken(string accessToken)
-        {
-            return await _db.Bookings.FirstOrDefaultAsync(x => x.AccessToken == accessToken);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Models
@@ -16,5 +16,7 @@ namespace Models
         }
 
         public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Beestje> Beestjes { get; set; }
+
     }
 }
