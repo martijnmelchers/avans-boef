@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Models;
 
 namespace DomainServices.Interfaces
 {
@@ -7,5 +8,6 @@ namespace DomainServices.Interfaces
     {
         Task<string> CreateBooking();
         Task SelectDate(string accessToken, DateTime date);
+        Task<Booking> GetBooking(string get);
     }
 }

@@ -16,7 +16,7 @@
         <div class="col-lg-6">
             @using (Html.BeginForm("Index", "Home", FormMethod.Post))
             {
-                @Html.ValidationSummary(true, "<b>Er ging iets niet goed!<b>", new { @class = "alert alert-danger no-list" })
+                @Html.ValidationSummary(true, "Er ging iets niet goed!", new { @class = "alert alert-danger no-list" })
 
                 <div class="form-group">
                     @Html.LabelFor(x => x.BookingDate)<br />
