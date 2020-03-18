@@ -17,3 +17,4 @@ C:\Users\Sascha\eindopdracht-prog6-1920-martijn-sascha\src\Models\obj\Debug\netc
 C:\Users\Sascha\eindopdracht-prog6-1920-martijn-sascha\src\Models\obj\Debug\netcoreapp3.1\Models.AssemblyInfo.cs
 C:\Users\Sascha\eindopdracht-prog6-1920-martijn-sascha\src\Models\obj\Debug\netcoreapp3.1\Models.dll
 C:\Users\Sascha\eindopdracht-prog6-1920-martijn-sascha\src\Models\obj\Debug\netcoreapp3.1\Models.pdb
+C:\Users\Sascha\eindopdracht-prog6-1920-martijn-sascha\src\Models\obj\Debug\netcoreapp3.1\Models.csprojAssemblyReference.cache

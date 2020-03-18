@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DomainServices.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,31 +10,32 @@ using Models;
 
 namespace Web.Controllers
 {
-    public class BeestjesController : Controller
+    public class BeestjesController : BaseController
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IBeestjeService _beestjeService;
 
-        public BeestjesController(ApplicationDbContext context)
+
+        public BeestjesController(ApplicationDbContext db, IBeestjeService beestjeService) : base(db)
         {
-            _context = context;
+            _beestjeService = beestjeService;
         }
 
         // GET: Beestjes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Beestjes.ToListAsync());
+            return View(await _beestjeService.GetBeestjes());
         }
 
         // GET: Beestjes/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var beestje = await _context.Beestjes
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var beestje = await _beestjeService.GetBeestje(id);
+
             if (beestje == null)
             {
                 return NotFound();
@@ -57,22 +59,21 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(beestje);
-                await _context.SaveChangesAsync();
+                beestje = await _beestjeService.CreateBeestje(beestje);
                 return RedirectToAction(nameof(Index));
             }
             return View(beestje);
         }
 
         // GET: Beestjes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var beestje = await _context.Beestjes.FindAsync(id);
+            var beestje = await _beestjeService.GetBeestje(id);
             if (beestje == null)
             {
                 return NotFound();
@@ -87,44 +88,19 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Type,Price,Image")] Beestje beestje)
         {
-            if (id != beestje.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(beestje);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!BeestjeExists(beestje.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
+            await _beestjeService.EditBeestje(id, beestje);
             return View(beestje);
         }
 
         // GET: Beestjes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var beestje = await _context.Beestjes
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var beestje = await _beestjeService.GetBeestje(id);
             if (beestje == null)
             {
                 return NotFound();
@@ -136,17 +112,17 @@ namespace Web.Controllers
         // POST: Beestjes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        /*public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var beestje = await _context.Beestjes.FindAsync(id);
             _context.Beestjes.Remove(beestje);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
+        }*/
 
         private bool BeestjeExists(int id)
         {
-            return _context.Beestjes.Any(e => e.Id == id);
+            return _beestjeService.GetBeestje(id) != null;
         }
     }
 }

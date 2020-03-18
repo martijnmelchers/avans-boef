@@ -6,9 +6,9 @@ namespace Models
 {
     public enum Type
     {
-        Woestijn,
-        Jungle,
-        Sneeuw,
-        Boerderij
+        Woestijn = 0,
+        Jungle = 1,
+        Sneeuw = 2,
+        Boerderij = 3
     }
 }

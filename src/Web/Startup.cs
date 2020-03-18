@@ -41,9 +41,14 @@ namespace Web
             
             // Add repositories
             services.AddScoped<IBookingRepository, BookingRepository>();
-            
+            services.AddScoped<IBeestjeRepository, BeestjeRepository>();
+
+
+
             // Add services
             services.AddScoped<IBookingService, BookingService>();
+            services.AddScoped<IBeestjeService, BeestjeService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
