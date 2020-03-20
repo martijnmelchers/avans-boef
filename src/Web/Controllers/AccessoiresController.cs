@@ -10,23 +10,23 @@ using Models;
 
 namespace Web.Controllers
 {
-    public class BeestjesController : BaseController
+    public class AccessoiresController : BaseController
     {
-        private readonly IBeestjeService _beestjeService;
+        private readonly IAccessoireService _accessoireService;
 
 
-        public BeestjesController(ApplicationDbContext db, IBeestjeService beestjeService) : base(db)
+        public AccessoiresController(ApplicationDbContext db, IAccessoireService Accessoireservice) : base(db)
         {
-            _beestjeService = beestjeService;
+            _accessoireService = Accessoireservice;
         }
 
-        // GET: Beestjes
+        // GET: Accessoires
         public async Task<IActionResult> Index()
         {
-            return View(await _beestjeService.GetBeestjes());
+            return View(await _accessoireService.GetAccessoires());
         }
 
-        // GET: Beestjes/Details/5
+        // GET: Accessoires/Details/5
         public async Task<IActionResult> Details(int id)
         {
             if (id == null)
@@ -34,38 +34,38 @@ namespace Web.Controllers
                 return NotFound();
             }
 
-            var beestje = await _beestjeService.GetBeestje(id);
+            var Accessoire = await _accessoireService.GetAccessoire(id);
 
-            if (beestje == null)
+            if (Accessoire == null)
             {
                 return NotFound();
             }
 
-            return View(beestje);
+            return View(Accessoire);
         }
 
-        // GET: Beestjes/Create
+        // GET: Accessoires/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Beestjes/Create
+        // POST: Accessoires/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Type,Price,Image")] Beestje beestje)
+        public async Task<IActionResult> Create([Bind("Id,Name,Type,Price,Image")] Accessoire Accessoire)
         {
             if (ModelState.IsValid)
             {
-                beestje = await _beestjeService.CreateBeestje(beestje);
+                Accessoire = await _accessoireService.CreateAccessoire(Accessoire);
                 return RedirectToAction(nameof(Index));
             }
-            return View(beestje);
+            return View(Accessoire);
         }
 
-        // GET: Beestjes/Edit/5
+        // GET: Accessoires/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
             if (id == null)
@@ -73,26 +73,26 @@ namespace Web.Controllers
                 return NotFound();
             }
 
-            var beestje = await _beestjeService.GetBeestje(id);
-            if (beestje == null)
+            var Accessoire = await _accessoireService.GetAccessoire(id);
+            if (Accessoire == null)
             {
                 return NotFound();
             }
-            return View(beestje);
+            return View(Accessoire);
         }
 
-        // POST: Beestjes/Edit/5
+        // POST: Accessoires/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Type,Price,Image")] Beestje beestje)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Type,Price,Image")] Accessoire Accessoire)
         {
-            await _beestjeService.EditBeestje(id, beestje);
-            return View(beestje);
+            await _accessoireService.EditAccessoire(id, Accessoire);
+            return View(Accessoire);
         }
 
-        // GET: Beestjes/Delete/5
+        // GET: Accessoires/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
             if (id == null)
@@ -100,13 +100,13 @@ namespace Web.Controllers
                 return NotFound();
             }
 
-            var beestje = await _beestjeService.GetBeestje(id);
-            if (beestje == null)
+            var Accessoire = await _accessoireService.GetAccessoire(id);
+            if (Accessoire == null)
             {
                 return NotFound();
             }
 
-            return View(beestje);
+            return View(Accessoire);
         }
 
         //POST: Accessoires/Delete/5
@@ -114,13 +114,13 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _beestjeService.DeleteBeestje(id);
+             await _accessoireService.DeleteAccessoire(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BeestjeExists(int id)
+        private bool AccessoireExists(int id)
         {
-            return _beestjeService.GetBeestje(id) != null;
+            return _accessoireService.GetAccessoire(id) != null;
         }
     }
 }

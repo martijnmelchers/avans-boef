@@ -24,9 +24,10 @@ namespace DomainServices
             return await _beestjeRepository.Insert(beestje);
         }
 
-        public Task DeleteBeestje(int Id)
+        public async Task DeleteBeestje(int Id)
         {
-            throw new NotImplementedException();
+            await _beestjeRepository.Delete(Id);
+            return;
         }
 
         public async Task EditBeestje(int Id, Beestje beestje)
