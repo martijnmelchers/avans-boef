@@ -37,5 +37,10 @@ namespace DomainServices
             
             booking.Date = date;
         }
+
+        public async Task<Booking> GetBooking(string accessToken)
+        {
+            return await _bookingRepository.GetByAccessToken(accessToken);
+        }
     }
 }

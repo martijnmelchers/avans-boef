@@ -35,13 +35,13 @@ namespace Web.Controllers
 
             try
             {
+                Remove("AccessToken");
                 await _bookingService.SelectDate(Get("AccessToken"), date.BookingDate);
-                return RedirectToAction("Index", "Home", date);
+                return RedirectToAction("SelectAnimals", "Booking");
             }
             catch (BookingNotFoundException)
             {
-                Remove("AccessToken");
-                return RedirectToAction("Index", "Home", new { booking = false });
+                return View("Index", date);
             }
             catch (InvalidDateException)
             {
@@ -49,13 +49,6 @@ namespace Web.Controllers
                 
                 return View("Index", date);
             }
-
-        }
-        
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         public IActionResult OrderStart()
