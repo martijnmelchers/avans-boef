@@ -26,23 +26,6 @@ namespace Web.Controllers
             return View(await _beestjeService.GetBeestjes());
         }
 
-        // GET: Beestjes/Details/5
-        public async Task<IActionResult> Details(int id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var beestje = await _beestjeService.GetBeestje(id);
-
-            if (beestje == null)
-            {
-                return NotFound();
-            }
-
-            return View(beestje);
-        }
 
         // GET: Beestjes/Create
         public IActionResult Create()
