@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using DomainServices.Interfaces;
 using Models;
@@ -46,6 +48,11 @@ namespace DomainServices
                 throw new BookingNotFoundException();
 
             return booking;
+        }
+
+        public async Task<List<Beestje>> GetBeestjesByBooking(Booking booking)
+        {
+            return booking.BookingBeestjes.Select(bb => bb.Beestje).ToList();
         }
     }
 }
