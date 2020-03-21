@@ -9,10 +9,10 @@ namespace DomainServices.Interfaces
     public interface IAccessoireService
     {
         Task<List<Accessoire>> GetAccessoires();
-        Task<Accessoire> GetAccessoire(int Id);
+        Task<Accessoire> GetAccessoire(int id);
         Task<Accessoire> CreateAccessoire(Accessoire beestje);
 
-        Task EditAccessoire(int Id, Accessoire beestje);
-        Task DeleteAccessoire(int Id);
+        Task EditAccessoire(int id, Accessoire beestje);
+        Task DeleteAccessoire(int id);
     }
 }

@@ -27,30 +27,34 @@ namespace DomainServices
         public async Task DeleteBeestje(int Id)
         {
             await _beestjeRepository.Delete(Id);
-            return;
         }
 
-        public async Task EditBeestje(int Id, Beestje beestje)
+        public async Task EditBeestje(int id, Beestje beestje)
         {
-             var currentBeestje = await _beestjeRepository.Get(Id);
+             var currentBeestje = await _beestjeRepository.Get(id);
+             
              currentBeestje.Accesoires = beestje.Accesoires;
              currentBeestje.Id         = beestje.Id;
              currentBeestje.Image      = beestje.Image;
              currentBeestje.Name       = beestje.Name;
              currentBeestje.Price      = beestje.Price;
              currentBeestje.Type       = beestje.Type;
-
-             return;
         }
 
-        public async  Task<Beestje> GetBeestje(int Id)
+        public async  Task<Beestje> GetBeestje(int id)
         {
-            return await _beestjeRepository.GetWhere(beestje => beestje.Id == Id);
+            return await _beestjeRepository.Get(id);
         }
 
         public async Task<List<Beestje>> GetBeestjes()
         {
             return await _beestjeRepository.GetAll();
+        }
+
+        public async Task<List<Beestje>> GetAvailableBeestjesByDate(DateTime date)
+        {
+            //TODO: Sascha dit maken
+            return new List<Beestje>();
         }
     }
 }
