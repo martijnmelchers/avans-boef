@@ -13,6 +13,7 @@ namespace Models
         public double Price { get; set; }
 
         public string Image { get; set; }
-        public List<Accessoire> Accesoires { get; set; }
+
+        public List<Accessoire> Accessoires { get; set; }
     }
 }

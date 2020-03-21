@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 
 namespace Models
 {
@@ -7,6 +8,7 @@ namespace Models
         public int Id { get; set; }
         public string AccessToken { get; set; }
         public DateTime Date { get; set; }
+
 
         public Booking()
         {

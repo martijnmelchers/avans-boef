@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using DomainServices.Interfaces;
 using Models;
@@ -33,7 +34,7 @@ namespace DomainServices
         {
              var currentBeestje = await _beestjeRepository.Get(id);
              
-             currentBeestje.Accesoires = beestje.Accesoires;
+             currentBeestje.Accessoires = beestje.Accessoires;
              currentBeestje.Id         = beestje.Id;
              currentBeestje.Image      = beestje.Image;
              currentBeestje.Name       = beestje.Name;
@@ -54,6 +55,9 @@ namespace DomainServices
         public async Task<List<Beestje>> GetAvailableBeestjesByDate(DateTime date)
         {
             //TODO: Sascha dit maken
+
+
+           // _beestjeRepository.GetAllWhere(b => b.Bookings.Where(booking => booking.Date != date ));
             return new List<Beestje>();
         }
     }
