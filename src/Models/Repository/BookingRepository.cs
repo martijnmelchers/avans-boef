@@ -81,5 +81,6 @@ namespace Models.Repository
             var bookingBeestje = await _db.BookingBeestjes.Where(b => b.Beestje == beestje).ToListAsync();
             return bookingBeestje;
         }
+
     }
 }
