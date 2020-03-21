@@ -41,7 +41,15 @@ namespace Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> SelectBeestjes(List<int> selectedBeestjes)
         {
-
+            try
+            {
+                await _bookingService.SelectBeestjes(GetAccessToken(), selectedBeestjes);
+            }
+            catch (BookingNotFoundException)
+            {
+                
+            }
+            
             return Ok();
         }
     }

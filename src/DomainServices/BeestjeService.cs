@@ -14,13 +14,11 @@ namespace DomainServices
     public class BeestjeService : IBeestjeService
     {
         private readonly IBeestjeRepository _beestjeRepository;
-        private readonly IBookingRepository _bookingRepository;
 
 
-        public BeestjeService(IBeestjeRepository beestjeRepository, IBookingRepository bookingRepository)
+        public BeestjeService(IBeestjeRepository beestjeRepository)
         {
             _beestjeRepository = beestjeRepository;
-            _bookingRepository = bookingRepository;
         }
 
         public async Task<Beestje> CreateBeestje(Beestje beestje)

@@ -7,14 +7,18 @@
     <ul class="list-group list-group-flush">
         <li class="list-group-item">
             <b>Geselecteerde datum</b><br/>
-            @Model.Date.ToString("d")
+            @Model.Date.ToString("D")
         </li>
         <li class="list-group-item">
             <b>Geselecteerde beestjes</b>
-            @foreach (var beestje in Model.BookingBeestjes)
-            {
-                @beestje.Beestje.Name
-            }
+            <div class="row">
+                @foreach (var beestje in Model.BookingBeestjes)
+                {
+                    <div class="col-lg-4">
+                        <img src="../../images/@(beestje.Beestje.Image == string.Empty ? "http://via.placeholder.com/200?text=Geen%20foto" : beestje.Beestje.Image)" class="card-img-top" alt="Foto van @beestje.Beestje.Name"/>
+                    </div>
+                }
+            </div>
             @if (Model.BookingBeestjes.Count == 0)
             {
                 <p>Je hebt op dit moment geen beestjes geselecteerd!</p>
@@ -22,7 +26,14 @@
         </li>
         <li class="list-group-item">
             <b>Geselecteerde accessories</b>
-            // TODO: hier loopen door accesoirces
+            @foreach (var accessoire in Model.BookingAccessoires)
+            {
+                @accessoire.Accessoire.Name
+            }
+            @if (Model.BookingAccessoires.Count == 0)
+            {
+                <p>Je hebt op dit moment geen accessoires geselecteerd!</p>
+            }
         </li>
     </ul>
 </div>

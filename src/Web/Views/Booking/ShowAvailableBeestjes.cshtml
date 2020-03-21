@@ -30,6 +30,11 @@
                     </div>
                 }
             </div>
+            
+            @if (Model.beestjes.Count == 0)
+            {
+                <p>Er zijn op deze datum geen beestjes beschikbaar!</p>
+            }
 
             <input class="btn btn-success float-right mt-5" type="submit" value="Selecteren"/>
         }

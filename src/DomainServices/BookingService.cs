@@ -14,10 +14,12 @@ namespace DomainServices
     public class BookingService : IBookingService
     {
         private readonly IBookingRepository _bookingRepository;
+        private readonly IBeestjeRepository _beestjeRepository;
 
-        public BookingService(IBookingRepository bookingRepository)
+        public BookingService(IBookingRepository bookingRepository, IBeestjeRepository beestjeRepository)
         {
             _bookingRepository = bookingRepository;
+            _beestjeRepository = beestjeRepository;
         }
 
         public async Task<string> CreateBooking()
@@ -29,7 +31,7 @@ namespace DomainServices
 
         public async Task SelectDate(string accessToken, DateTime date)
         {
-            var booking = await _bookingRepository.GetByAccessToken(accessToken);
+            var booking = await GetBooking(accessToken);
 
             if(booking == null)
                 throw new BookingNotFoundException();
@@ -50,9 +52,33 @@ namespace DomainServices
             return booking;
         }
 
-        public async Task<List<Beestje>> GetBeestjesByBooking(Booking booking)
+        public List<Beestje> GetBeestjesByBooking(Booking booking)
         {
             return booking.BookingBeestjes.Select(bb => bb.Beestje).ToList();
+        }
+
+        public async Task SelectBeestjes(string accessToken, List<int> selectedBeestjes)
+        {
+            var booking = await GetBooking(accessToken);
+            
+            if(booking == null)
+                throw new BookingNotFoundException();
+
+            if(booking.BookingBeestjes == null)
+                booking.BookingBeestjes = new List<BookingBeestje>();
+            
+            foreach (var beestjeId in selectedBeestjes)
+            {
+                var beestje = await _beestjeRepository.Get(beestjeId);
+                
+                //TODO: Implement validation rules
+
+                booking.BookingBeestjes.Add(new BookingBeestje
+                {
+                    Booking = booking,
+                    Beestje =  beestje
+                });
+            }
         }
     }
 }

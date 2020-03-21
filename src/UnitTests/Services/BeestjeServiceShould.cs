@@ -1,14 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
 using DomainServices;
 using DomainServices.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using Models.Repository;
-using System.Collections.Generic;
 using Models;
-using Models.Repository.Interfaces;
 using Moq;
 
 namespace UnitTests.Services
@@ -19,6 +12,9 @@ namespace UnitTests.Services
 
         public BeestjeServiceShould()
         {
+            var _dbMock = new Mock<ApplicationDbContext>();
+            
+            _beestjeService = new BeestjeService(new BeestjeRepository(_dbMock.Object));
         }
     }
 }

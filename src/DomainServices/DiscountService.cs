@@ -19,19 +19,19 @@ namespace DomainServices
             _bookingService = bookingService;
         }
 
-        public async Task<List<Discount>> GetDiscount(Booking booking)
+        public List<Discount> GetDiscount(Booking booking)
         {
-            List<Discount> discounts = new List<Discount>();
-            var typeDiscount = await GetTypeDiscount(booking);
+            var discounts = new List<Discount>();
+            var typeDiscount = GetTypeDiscount(booking);
 
             if(typeDiscount != null)
                 discounts.Add(typeDiscount);
 
-            var duckNameDiscount = await GetDuckNameDiscount(booking);
+            var duckNameDiscount = GetDuckNameDiscount(booking);
             if(duckNameDiscount != null)
                 discounts.Add(duckNameDiscount);
 
-            var charDiscounts =  await GetCharDiscount(booking);
+            var charDiscounts =  GetCharDiscount(booking);
             discounts.AddRange(charDiscounts);
 
             var dateDiscount = GetDateDiscount(booking);
@@ -40,12 +40,10 @@ namespace DomainServices
 
             var totalDiscount = 0;
 
-            discounts.ForEach((discount) =>
+            discounts.ForEach(discount =>
             {
                 if (totalDiscount + discount.Percentage > 60)
-                {
                     discounts.Remove(discount);
-                }
                 else
                     totalDiscount += discount.Percentage;
             });
@@ -62,58 +60,42 @@ namespace DomainServices
             return null;
         }
 
-        private async Task<Discount> GetDuckNameDiscount(Booking booking)
+        private Discount GetDuckNameDiscount(Booking booking)
         {
-            var beestjes = await _bookingService.GetBeestjesByBooking(booking);
-            int discount = 0;
+            var beestjes = _bookingService.GetBeestjesByBooking(booking);
+            var discount = 0;
 
             if (beestjes.FirstOrDefault(b => b.Name == "Eend") != null)
-            {
-                var random = new Random();
-                if (random.Next(1, 6) == 0)
-                {
+                if (new Random().Next(1, 6) == 0)
                     discount += 50;
-                }
-            }
 
-            if (discount == 0)
-                return null;
-
-            return new Discount("1 op 6 kans met naam: Eend", discount);
+            return discount == 0 ? null : new Discount("1 op 6 kans met naam: Eend", discount);
         }
 
-        private async Task<List<Discount>>GetCharDiscount(Booking booking)
+        private List<Discount> GetCharDiscount(Booking booking)
         {
-            var beestjes = await _bookingService.GetBeestjesByBooking(booking);
+            var beestjes = _bookingService.GetBeestjesByBooking(booking);
             var discounts = new List<Discount>();
-            var curChar = 'a';
+            const char curChar = 'a';
 
             while (beestjes.FirstOrDefault(b => b.Name.Contains(curChar)) != null)
             {
-                discounts.Add(new Discount("Beestje met de letter: " + curChar.ToString(),2));
+                discounts.Add(new Discount("Beestje met de letter: " + curChar,2));
             }
 
             return discounts;
         }
 
-        private async Task<Discount> GetTypeDiscount(Booking booking)
+        private Discount GetTypeDiscount(Booking booking)
         {
-            var beestjes =  await _bookingService.GetBeestjesByBooking(booking);
+            var beestjes =  _bookingService.GetBeestjesByBooking(booking);
 
             if (beestjes.Count < 3)
                 return null;
 
-            var types =  beestjes.Select(b => b.Type);
+            var types =  beestjes.Select(b => b.Type).ToList();
 
-            foreach (var type in types)
-            {
-                if(types.Count(x => x.Equals(type)) == 3)
-                {
-                    return new Discount("3 items van het zelfde type", 10);
-                }
-            }
-
-            return null;
+            return types.Any(type => types.Count(x => x.Equals(type)) == 3) ? new Discount("3 items van het zelfde type", 10) : null;
         }
     }
 }
