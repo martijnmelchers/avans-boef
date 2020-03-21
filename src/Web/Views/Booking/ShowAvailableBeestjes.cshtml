@@ -1,0 +1,41 @@
+@model (Models.Booking booking, List<Models.Beestje> beestjes)
+
+@{
+    ViewBag.Title = "Selecteer beestjes";
+    Layout = "_Layout";
+}
+<div class="row">
+    <div class="col-lg-9">
+        <h2>Selecteer beestjes</h2>
+
+        @using (Html.BeginForm("SelectBeestjes", "Booking", FormMethod.Post))
+        {
+            <div class="row">
+
+                @foreach (var availableBeestje in Model.beestjes)
+                {
+                    <div class="col-lg-3">
+                        <div class="card">
+                            <img src="../../images/@(availableBeestje.Image == string.Empty ? "http://via.placeholder.com/200?text=Geen%20foto" : availableBeestje.Image)" class="card-img-top" alt="Foto van @availableBeestje.Name"/>
+                            <div class="card-body">
+                                <h5 class="card-title text-center">@availableBeestje.Name</h5>
+                                <div class="form-check text-center">
+                                    <input class="form-check-input" type="checkbox" name="selectedBeestjes" value="@availableBeestje.Id">
+                                    <label class="form-check-label">
+                                        @availableBeestje.Price.ToString("C")
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <input class="btn btn-success float-right mt-5" type="submit" value="Selecteren"/>
+        }
+
+    </div>
+    <div class="col-lg-3">
+       <partial name="_BookingDetails" model="Model.booking"/>
+    </div>
+</div>

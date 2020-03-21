@@ -40,7 +40,12 @@ namespace DomainServices
 
         public async Task<Booking> GetBooking(string accessToken)
         {
-            return await _bookingRepository.GetByAccessToken(accessToken);
+            var booking = await _bookingRepository.GetByAccessToken(accessToken);
+            
+            if(booking == null)
+                throw new BookingNotFoundException();
+
+            return booking;
         }
     }
 }

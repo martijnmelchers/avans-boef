@@ -21,26 +21,30 @@ namespace Web.Controllers
         public async Task<IActionResult> Index()
         {
             // Check if accessToken is present, if not set one.
-            if (!Present("AccessToken"))
-                Set("AccessToken", await _bookingService.CreateBooking());
-            
+            if (!HasAccessToken())
+                SetAccessToken(await _bookingService.CreateBooking());
+
             return View();
         }
         
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(DateSelection date)
         {
-            if (!Present("AccessToken"))
+            if (!HasAccessToken())
                 return Redirect("/");
 
             try
             {
-                Remove("AccessToken");
-                await _bookingService.SelectDate(Get("AccessToken"), date.BookingDate);
-                return RedirectToAction("SelectAnimals", "Booking");
+                await _bookingService.SelectDate(GetAccessToken(), date.BookingDate);
+                return RedirectToAction("ShowAvailableBeestjes", "Booking");
             }
             catch (BookingNotFoundException)
             {
+                // This should not happen, but in the case it does, we set a new token
+                SetAccessToken(await _bookingService.CreateBooking());
+                ModelState.AddModelError(string.Empty, "Er is iets fout gegaan, probeer het opnieuw!");
+
+                
                 return View("Index", date);
             }
             catch (InvalidDateException)

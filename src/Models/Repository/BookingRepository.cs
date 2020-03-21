@@ -68,7 +68,7 @@ namespace Models.Repository
 
         public async Task<Booking> GetByAccessToken(string accessToken)
         {
-            return await _db.Bookings.FirstOrDefaultAsync(x => x.AccessToken == accessToken);
+            return await _db.Bookings.Include(x => x.BookingBeestjes).FirstOrDefaultAsync(x => x.AccessToken == accessToken);
         }
 
         public async Task<List<BookingBeestje>> GetBookingBeestjeByDate(DateTime date)

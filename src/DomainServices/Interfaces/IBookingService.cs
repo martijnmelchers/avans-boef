@@ -8,6 +8,6 @@ namespace DomainServices.Interfaces
     {
         Task<string> CreateBooking();
         Task SelectDate(string accessToken, DateTime date);
-        Task<Booking> GetBooking(string get);
+        Task<Booking> GetBooking(string accessToken);
     }
 }

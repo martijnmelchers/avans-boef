@@ -21,57 +21,26 @@ namespace Web.Controllers
             if ((await next.Invoke()).Exception == null)
                 await _db.SaveChangesAsync();
 
+            TempData.Keep();
             _db.Dispose();
         }
 
-        #region Cookie Extension
+        #region Access Token Management
 
-
-        /// <summary>  
-        /// Returns if the cookie is present
-        /// </summary>  
-        /// <param name="key">Key </param>  
-        /// <returns>string value</returns>
-        public bool Present(string key)
+        public bool HasAccessToken()
         {
-            return Request.Cookies.ContainsKey(key);
+            return TempData["AccessToken"] != null;
         }
-        
-        /// <summary>  
-        /// Get the cookie  
-        /// </summary>  
-        /// <param name="key">Key </param>  
-        /// <returns>string value</returns>  
-        public string Get(string key)  
-        {  
-            return Request.Cookies[key];  
-        }  
-        /// <summary>  
-        /// set the cookie  
-        /// </summary>  
-        /// <param name="key">key (unique indentifier)</param>  
-        /// <param name="value">value to store in cookie object</param>  
-        /// <param name="expireTime">expiration time</param>  
-        public void Set(string key, string value, int? expireTime = null)  
-        {
-            var option = new CookieOptions
-            {
-                Expires = expireTime.HasValue
-                    ? DateTime.Now.AddMinutes(expireTime.Value)
-                    : DateTime.MaxValue
-            };
 
-            Response.Cookies.Append(key, value, option);  
-        }  
-        /// <summary>  
-        /// Delete the key  
-        /// </summary>  
-        /// <param name="key">Key</param>  
-        public void Remove(string key)  
-        {  
-            Response.Cookies.Delete(key);  
-        } 
-        
+        public void SetAccessToken(string accessToken)
+        {
+            TempData["AccessToken"] = accessToken;
+        }
+
+        public string GetAccessToken()
+        {
+            return TempData["AccessToken"].ToString();
+        }
 
         #endregion
         

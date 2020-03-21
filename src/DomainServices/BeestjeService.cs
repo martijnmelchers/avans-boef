@@ -57,11 +57,7 @@ namespace DomainServices
 
         public async Task<List<Beestje>> GetAvailableBeestjesByDate(DateTime date)
         {
-            //TODO: Sascha dit maken
-            var beestjes = await _beestjeRepository.GetAllWhere(b =>
-                b.BookingBeestjes.FirstOrDefault(booking => booking.Booking.Date == date) == null);
-
-            return beestjes;
+            return  await _beestjeRepository.GetAllWhere(b => b.BookingBeestjes.FirstOrDefault(booking => booking.Booking.Date == date) == null);
         }
     }
 }

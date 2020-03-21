@@ -1,0 +1,28 @@
+@model Models.Booking
+
+<div class="card">
+    <div class="card-header">
+        Boeking
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            <b>Geselecteerde datum</b><br/>
+            @Model.Date.ToString("d")
+        </li>
+        <li class="list-group-item">
+            <b>Geselecteerde beestjes</b>
+            @foreach (var beestje in Model.BookingBeestjes)
+            {
+                @beestje.Beestje.Name
+            }
+            @if (Model.BookingBeestjes.Count == 0)
+            {
+                <p>Je hebt op dit moment geen beestjes geselecteerd!</p>
+            }
+        </li>
+        <li class="list-group-item">
+            <b>Geselecteerde accessories</b>
+            // TODO: hier loopen door accesoirces
+        </li>
+    </ul>
+</div>
