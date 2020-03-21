@@ -11,5 +11,7 @@ namespace Models
         public double Price { get; set; }
 
         public string Image { get; set; }
+
+        public IList<BookingAccessoires> BookingAccessoires { get; set; }
     }
 }
