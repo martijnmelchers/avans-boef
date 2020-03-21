@@ -21,12 +21,11 @@ namespace Models
             modelBuilder.Entity<BookingBeestje>().HasKey(sc => new { sc.BookingId, sc.BeestjeId});
         }
 
+        public DbSet<BookingBeestje> BookingBeestjes { get; set; }
 
         public DbSet<Accessoire> Accessoires { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Beestje> Beestjes { get; set; }
-
-        public DbSet<BookingBeestje> BookinmBeestjes { get; set; }
 
     }
 }

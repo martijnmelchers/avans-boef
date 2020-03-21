@@ -23,6 +23,8 @@ namespace Web.Controllers
         // GET: Beestjes
         public async Task<IActionResult> Index()
         {
+
+           await _beestjeService.GetAvailableBeestjesByDate(DateTime.Now);
             return View(await _beestjeService.GetBeestjes());
         }
 

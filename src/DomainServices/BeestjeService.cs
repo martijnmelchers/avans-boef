@@ -14,10 +14,13 @@ namespace DomainServices
     public class BeestjeService : IBeestjeService
     {
         private readonly IBeestjeRepository _beestjeRepository;
+        private readonly IBookingRepository _bookingRepository;
 
-        public BeestjeService(IBeestjeRepository beestjeRepository)
+
+        public BeestjeService(IBeestjeRepository beestjeRepository, IBookingRepository bookingRepository)
         {
             _beestjeRepository = beestjeRepository;
+            _bookingRepository = bookingRepository;
         }
 
         public async Task<Beestje> CreateBeestje(Beestje beestje)
@@ -55,10 +58,10 @@ namespace DomainServices
         public async Task<List<Beestje>> GetAvailableBeestjesByDate(DateTime date)
         {
             //TODO: Sascha dit maken
+            var beestjes = await _beestjeRepository.GetAllWhere(b =>
+                b.BookingBeestjes.FirstOrDefault(booking => booking.Booking.Date == date) == null);
 
-
-           // _beestjeRepository.GetAllWhere(b => b.Bookings.Where(booking => booking.Date != date ));
-            return new List<Beestje>();
+            return beestjes;
         }
     }
 }
