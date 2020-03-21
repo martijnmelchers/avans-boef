@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Models;
 
 namespace Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200317151343_Beestje")]
+    partial class Beestje
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -219,7 +221,7 @@ namespace Web.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Models.Accessoire", b =>
+            modelBuilder.Entity("Models.Accesoire", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -242,7 +244,7 @@ namespace Web.Migrations
 
                     b.HasIndex("BeestjeId");
 
-                    b.ToTable("Accessoires");
+                    b.ToTable("Accesoire");
                 });
 
             modelBuilder.Entity("Models.Beestje", b =>
@@ -338,7 +340,7 @@ namespace Web.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Models.Accessoire", b =>
+            modelBuilder.Entity("Models.Accesoire", b =>
                 {
                     b.HasOne("Models.Beestje", null)
                         .WithMany("Accesoires")
