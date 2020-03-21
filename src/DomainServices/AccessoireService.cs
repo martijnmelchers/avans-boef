@@ -14,36 +14,35 @@ namespace DomainServices
     {
         private readonly IAccessoireRepository _accessoireRepository;
 
-        public AccessoireService(IAccessoireRepository AccessoireRepository)
+        public AccessoireService(IAccessoireRepository accessoireRepository)
         {
-            _accessoireRepository = AccessoireRepository;
+            _accessoireRepository = accessoireRepository;
         }
 
-        public async Task<Accessoire> CreateAccessoire(Accessoire Accessoire)
+        public async Task<Accessoire> CreateAccessoire(Accessoire accessoire)
         {
-            return await _accessoireRepository.Insert(Accessoire);
+            return await _accessoireRepository.Insert(accessoire);
         }
 
-        public async Task DeleteAccessoire(int Id)
+        public async Task DeleteAccessoire(int id)
         {
-            await _accessoireRepository.Delete(Id);
+            await _accessoireRepository.Delete(id);
             return;
         }
 
-        public async Task EditAccessoire(int Id, Accessoire Accessoire)
+        public async Task EditAccessoire(int id, Accessoire accessoire)
         {
-             var currentAccessoire = await _accessoireRepository.Get(Id);
-             currentAccessoire.Id         = Accessoire.Id;
-             currentAccessoire.Image      = Accessoire.Image;
-             currentAccessoire.Name       = Accessoire.Name;
-             currentAccessoire.Price      = Accessoire.Price;
-
-             return;
+             var currentAccessoire = await _accessoireRepository.Get(id);
+             
+             currentAccessoire.Id         = accessoire.Id;
+             currentAccessoire.Image      = accessoire.Image;
+             currentAccessoire.Name       = accessoire.Name;
+             currentAccessoire.Price      = accessoire.Price;
         }
 
-        public async  Task<Accessoire> GetAccessoire(int Id)
+        public async  Task<Accessoire> GetAccessoire(int id)
         {
-            return await _accessoireRepository.GetWhere(Accessoire => Accessoire.Id == Id);
+            return await _accessoireRepository.Get(id);
         }
 
         public async Task<List<Accessoire>> GetAccessoires()

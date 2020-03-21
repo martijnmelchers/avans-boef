@@ -8,10 +8,10 @@ namespace DomainServices.Interfaces
     public interface IBeestjeService
     {
         Task<List<Beestje>> GetBeestjes();
-        Task<Beestje> GetBeestje(int Id);
+        Task<Beestje> GetBeestje(int id);
         Task<Beestje> CreateBeestje(Beestje beestje);
 
-        Task EditBeestje(int Id, Beestje beestje);
-        Task DeleteBeestje(int Id);
+        Task EditBeestje(int id, Beestje beestje);
+        Task DeleteBeestje(int id);
     }
 }
