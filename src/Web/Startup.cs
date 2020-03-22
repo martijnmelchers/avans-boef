@@ -28,17 +28,24 @@ namespace Web
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Web")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options =>
+                    {
+                        options.SignIn.RequireConfirmedAccount = false;
+                        options.Password.RequireDigit = false;
+                        options.Password.RequireNonAlphanumeric = false;
+                        options.Password.RequireUppercase = false;
+                    }
+                )
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            
+
             services.AddControllersWithViews();
             services.AddRazorPages();
-            
+
             // Add repositories
             services.AddScoped<IBookingRepository, BookingRepository>();
             services.AddScoped<IBeestjeRepository, BeestjeRepository>();
             services.AddScoped<IAccessoireRepository, AccessoireRepository>();
-
 
 
             // Add services
@@ -46,7 +53,6 @@ namespace Web
             services.AddScoped<IBeestjeService, BeestjeService>();
             services.AddScoped<IAccessoireService, AccessoireService>();
             services.AddScoped<IDiscountService, DiscountService>();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,6 +68,7 @@ namespace Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

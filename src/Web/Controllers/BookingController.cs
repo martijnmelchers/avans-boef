@@ -18,16 +18,18 @@ namespace Web.Controllers
         private readonly IBeestjeService _beestjeService;
         private readonly IDiscountService _discountService;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
         public BookingController(
             ApplicationDbContext db, IBookingService bookingService,
-            IDiscountService discountService,
-            IBeestjeService beestjeService, SignInManager<IdentityUser> signInManager) : base(db)
+            IDiscountService discountService, IBeestjeService beestjeService, 
+            SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager) : base(db)
         {
             _bookingService = bookingService;
             _beestjeService = beestjeService;
             _discountService = discountService;
             _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> ShowAvailableBeestjes()
@@ -91,7 +93,23 @@ namespace Web.Controllers
 
         public async Task<IActionResult> ShowContactInfo()
         {
-            return Ok();
+            try
+            {
+                var booking = await _bookingService.GetBooking(GetAccessToken());
+
+                if (booking.Step >= BookingStep.Price)
+                    return RedirectToAction("ShowPricing");
+
+                if (!_signInManager.IsSignedIn(User))
+                    return RedirectToAction("ShowLoginOrRegister");
+
+                return View("LoginOrRegister", (booking, new Register(), new Login()));
+
+            }
+            catch (BookingNotFoundException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
         
         public async Task<IActionResult> ShowPricing()
@@ -125,7 +143,7 @@ namespace Web.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddDetailsAndCalculatePrice()
+        public async Task<IActionResult> AddDetailsAndCalculatePrice(ContactInfo contactInfo)
         {
             // TODO: Implement
             return Ok();
@@ -137,7 +155,7 @@ namespace Web.Controllers
             var result = await _signInManager.PasswordSignInAsync(login.Email, login.Password, false, false);
             if (result.Succeeded)
             {
-                var user = await _signInManager.UserManager.FindByEmailAsync(login.Email);
+                var user = await _userManager.FindByEmailAsync(login.Email);
                 await _bookingService.LinkAccountToBooking(GetAccessToken(), user.Id);
                 
                 return RedirectToAction("ShowContactInfo");
@@ -151,8 +169,23 @@ namespace Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(Register register)
         {
-            //TODO: Register
-            return Ok();
+            var result = await _userManager.CreateAsync(new IdentityUser { UserName = register.Email, Email = register.Email }, register.Password);
+            if (result.Succeeded)
+            {
+                var user = await _userManager.FindByEmailAsync(register.Email);
+                
+                if(register.IsAdmin)
+                    await _userManager.AddToRoleAsync(user, "Admin");
+
+                await _signInManager.SignInAsync(user, false);
+                await _bookingService.LinkAccountToBooking(GetAccessToken(), user.Id);
+
+                return RedirectToAction("ShowContactInfo");
+            }
+            
+            // If register failed, show the view again
+            ModelState.AddModelError(string.Empty, "Er is iets misgegaan tijdens de registratie!");
+            return await ShowLoginOrRegister();
         }
          
         #endregion

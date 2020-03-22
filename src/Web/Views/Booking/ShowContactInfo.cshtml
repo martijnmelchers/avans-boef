@@ -1,0 +1,16 @@
+@model (Models.Booking booking, Models.Form.ContactInfo contactInfo)
+
+@{
+    ViewBag.Title = "Contactinformatie";
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-lg-9">
+        <h2>Contactinformatie</h2>
+        
+    </div>
+    <div class="col-lg-3">
+       <partial name="_BookingDetails" model="Model.booking"/>
+    </div>
+</div>
