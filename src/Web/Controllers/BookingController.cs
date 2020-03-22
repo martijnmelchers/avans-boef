@@ -19,17 +19,20 @@ namespace Web.Controllers
         private readonly IDiscountService _discountService;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public BookingController(
             ApplicationDbContext db, IBookingService bookingService,
             IDiscountService discountService, IBeestjeService beestjeService, 
-            SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager) : base(db)
+            SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager) : base(db)
         {
             _bookingService = bookingService;
             _beestjeService = beestjeService;
             _discountService = discountService;
             _signInManager = signInManager;
             _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         public async Task<IActionResult> ShowAvailableBeestjes()
@@ -173,9 +176,15 @@ namespace Web.Controllers
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByEmailAsync(register.Email);
-                
-                if(register.IsAdmin)
+
+                if (register.IsAdmin)
+                {
+                    // If the role does not exist yet we need to create it once, need to find better solution if this was ever be used...
+                    if (!await _roleManager.RoleExistsAsync("Admin"))
+                        await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                    
                     await _userManager.AddToRoleAsync(user, "Admin");
+                }
 
                 await _signInManager.SignInAsync(user, false);
                 await _bookingService.LinkAccountToBooking(GetAccessToken(), user.Id);
