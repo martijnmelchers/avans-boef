@@ -8,6 +8,8 @@ using Models;
 using Models.Exceptions;
 using Models.Repository;
 using Models.Repository.Interfaces;
+using DayOfWeek = System.DayOfWeek;
+using Type = Models.Type;
 
 namespace DomainServices
 {
@@ -80,6 +82,26 @@ namespace DomainServices
             }
 
             booking.Step = BookingStep.Accessoires;
+        
+        }
+
+        private bool isValid(Booking booking, Beestje beestje)
+        {
+            var date = booking.Date;
+
+            if(beestje.Name == "Penguïn")
+                if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+                    return false;
+                
+            if(beestje.Type == Type.Sneeuw)
+                if (date.Month >= 6 && date.Month <= 8)
+                    return false;
+
+            if(beestje.Type == Type.Woestijn)
+                if ((date.Month >= 10 && date.Month <= 12) || (date.Month >= 1 && date.Month <= 2))
+                    return false;
+
+            return true;
         }
     }
 }
