@@ -34,7 +34,7 @@ namespace Web.Controllers
             try
             {
                 var booking = await _bookingService.GetBooking(GetAccessToken());
-                var beestjes = await _beestjeService.GetAvailableBeestjesByDate(booking.Date);
+                var beestjes = await _beestjeService.GetAvailableBeestjes(booking);
 
                 if (booking.Step >= BookingStep.Price)
                     return RedirectToAction("ShowPricing");

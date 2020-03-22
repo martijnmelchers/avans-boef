@@ -13,7 +13,8 @@ namespace DomainServices.Interfaces
 
         Task EditBeestje(int id, Beestje beestje);
         Task DeleteBeestje(int id);
+        Task<List<(Beestje beestje, bool available)>> GetAvailableBeestjes(Booking booking);
 
-        Task<List<Beestje>> GetAvailableBeestjesByDate(DateTime date);
+
     }
 }
