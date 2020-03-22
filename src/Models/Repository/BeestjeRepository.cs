@@ -19,7 +19,10 @@ namespace Models.Repository
         
         public async Task<Beestje> Get(int id)
         {
-            return await _db.Beestjes.Include(x => x.BeestjeAccessoires).FirstOrDefaultAsync(x => x.Id == id);
+            return await _db.Beestjes
+                .Include(x => x.BeestjeAccessoires)
+                .ThenInclude(x => x.Accessoire)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<List<Beestje>> GetAll()
