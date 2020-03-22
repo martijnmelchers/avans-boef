@@ -1,7 +1,7 @@
-@model Models.Booking
+@model (Models.Booking booking, Models.Form.Register register, Models.Form.Login login)
 
 @{
-    ViewBag.Title = "Selecteer beestjes";
+    ViewBag.Title = "Inloggen of Registeren";
     Layout = "_Layout";
 }
 
@@ -9,10 +9,55 @@
     <div class="col-lg-9">
         <h2>Inloggen of registreren</h2>
 
-     
+        <div class="row">
+            <div class="col-lg-6">
+                @using (Html.BeginForm("Login", "Booking", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <label asp-for="login.Email"></label>
+                        <input asp-for="login.Email" class="form-control" />
+                        <span asp-validation-for="login.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="login.Password"></label>
+                        <input asp-for="login.Password" class="form-control" />
+                        <span asp-validation-for="login.Password" class="text-danger"></span>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Inloggen</button>
+
+                }
+            </div>
+            <div class="col-lg-6">
+                @using (Html.BeginForm("Register", "Booking", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <label asp-for="register.Email">Email</label>
+                        <input asp-for="register.Email" class="form-control"/>
+                        <span asp-validation-for="register.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="register.Password">Wachtwoord</label>
+                        <input asp-for="register.Password" class="form-control"/>
+                        <span asp-validation-for="register.Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="register.PasswordRepeat">Herhaal wachtwoord</label>
+                        <input asp-for="register.PasswordRepeat" class="form-control"/>
+                        <span asp-validation-for="register.PasswordRepeat" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Registreren</button>
+                }
+            </div>
+        </div>
+
 
     </div>
     <div class="col-lg-3">
-        <partial name="_BookingDetails" model="Model"/>
+        <partial name="_BookingDetails" model="Model.booking"/>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

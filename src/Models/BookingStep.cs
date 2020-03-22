@@ -6,6 +6,7 @@ namespace Models
         Beestjes,
         Accessoires,
         Login,
+        PersonalData,
         Price,
         Finished
     }

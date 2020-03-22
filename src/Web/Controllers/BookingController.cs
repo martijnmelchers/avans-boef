@@ -79,7 +79,7 @@ namespace Web.Controllers
                 if (_signInManager.IsSignedIn(User))
                     return RedirectToAction("SelectPrice");
 
-                return View("LoginOrRegister", booking);
+                return View("LoginOrRegister", (booking, new Register(), new Login()));
 
             }
             catch (BookingNotFoundException)
@@ -124,7 +124,20 @@ namespace Web.Controllers
             // TODO: Implement
             return Ok();
         }
-        
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login()
+        {
+            // TODO: Login
+            return Ok();
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register()
+        {
+            //TODO: Register
+            return Ok();
+        }
         #endregion
     }
 }
