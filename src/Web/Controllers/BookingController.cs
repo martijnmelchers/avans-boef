@@ -54,7 +54,7 @@ namespace Web.Controllers
             try
             {
                 var booking = await _bookingService.GetBooking(GetAccessToken());
-                var accessoires = new List<Accessoire>();
+                var accessoires = await _bookingService.GetAvailableAccessoires(GetAccessToken());
 
                 if (booking.Step >= BookingStep.Price)
                     return RedirectToAction("ShowPricing");
@@ -121,6 +121,7 @@ namespace Web.Controllers
         public async Task<IActionResult> SelectAccessoires(List<int> selectedAccessoires)
         {
             // TODO: Implement
+
             return Ok();
         }
 

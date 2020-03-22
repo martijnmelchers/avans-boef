@@ -14,7 +14,6 @@ namespace UnitTests.Services
         {
             var _dbMock = new Mock<ApplicationDbContext>();
             
-            _beestjeService = new BeestjeService(new BeestjeRepository(_dbMock.Object));
         }
     }
 }

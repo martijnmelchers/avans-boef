@@ -12,11 +12,13 @@ namespace DomainServices
     public class BeestjeService : IBeestjeService
     {
         private readonly IBeestjeRepository _beestjeRepository;
+        private readonly IAccessoireRepository _accessoireRepository;
 
 
-        public BeestjeService(IBeestjeRepository beestjeRepository)
+        public BeestjeService(IBeestjeRepository beestjeRepository, IAccessoireRepository accessoireRepository)
         {
             _beestjeRepository = beestjeRepository;
+            _accessoireRepository = accessoireRepository;
         }
 
         public async Task<Beestje> CreateBeestje(Beestje beestje)
@@ -33,7 +35,6 @@ namespace DomainServices
         {
              var currentBeestje = await _beestjeRepository.Get(id);
              
-             currentBeestje.Accessoires = beestje.Accessoires;
              currentBeestje.Id         = beestje.Id;
              currentBeestje.Image      = beestje.Image;
              currentBeestje.Name       = beestje.Name;
@@ -57,6 +58,37 @@ namespace DomainServices
             var availableBeestjes = beestjes.Select(beestje => (beestje, IsValid(booking.Date, beestje))).ToList();
             
             return availableBeestjes;
+        }
+
+
+        public async Task<Beestje> SelectAccessoires(Beestje beestje, List<int> accessoires)
+        {
+
+
+            foreach (var beestjeAccessoire in beestje.BeestjeAccessoires.ToList())
+            {
+                if (!accessoires.Contains(beestjeAccessoire.AccessoireId))
+                    beestje.BeestjeAccessoires.Remove(beestjeAccessoire);
+                else
+                    accessoires.Remove(beestjeAccessoire.AccessoireId);
+            }
+
+
+
+            foreach (var accessoireId in accessoires)
+            {
+                var accessoire = await _accessoireRepository.Get(accessoireId);
+
+
+                beestje.BeestjeAccessoires.Add(new BeestjeAccessoires()
+                {
+                   Beestje = beestje,
+                    Accessoire = accessoire
+                });
+            
+            }
+
+            return beestje;
         }
 
 
