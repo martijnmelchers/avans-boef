@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DomainServices.Interfaces;
 using Models;
 using Models.Repository.Interfaces;
+using Type = Models.Type;
 
 namespace DomainServices
 {
@@ -50,9 +51,37 @@ namespace DomainServices
             return await _beestjeRepository.GetAll();
         }
 
-        public async Task<List<Beestje>> GetAvailableBeestjesByDate(DateTime date)
+        public async Task<List<(Beestje beestje, bool available)>> GetAvailableBeestjes(Booking booking)
         {
-            return  await _beestjeRepository.GetAllWhere(b => b.BookingBeestjes.FirstOrDefault(booking => booking.Booking.Date == date) == null);
+            var beestjes = await _beestjeRepository.GetAllWhere(b => b.BookingBeestjes.FirstOrDefault(bookings => bookings.Booking.Date == booking.Date) == null);
+
+            List<(Beestje beestje, bool available)> availableBeestjes = new List<(Beestje beestje, bool available)>();
+
+            beestjes.ForEach((beestje) =>
+            {
+                availableBeestjes.Add((beestje, isValid(booking, beestje)));
+            });
+            return availableBeestjes;
+        }
+
+
+        private bool isValid(Booking booking, Beestje beestje)
+        {
+            var date = booking.Date;
+
+            if (beestje.Name == "Penguïn")
+                if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+                    return false;
+
+            if (beestje.Type == Type.Sneeuw)
+                if (date.Month >= 6 && date.Month <= 8)
+                    return false;
+
+            if (beestje.Type == Type.Woestijn)
+                if ((date.Month >= 10 && date.Month <= 12) || (date.Month >= 1 && date.Month <= 2))
+                    return false;
+
+            return true;
         }
     }
 }

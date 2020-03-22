@@ -24,7 +24,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Index()
         {
 
-           await _beestjeService.GetAvailableBeestjesByDate(DateTime.Now);
+           await _beestjeService.GetBeestjes();
             return View(await _beestjeService.GetBeestjes());
         }
 

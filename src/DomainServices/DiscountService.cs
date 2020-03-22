@@ -62,7 +62,7 @@ namespace DomainServices
 
         private Discount GetDuckNameDiscount(Booking booking)
         {
-            var beestjes = _bookingService.GetBeestjesByBooking(booking);
+            var beestjes = _bookingService.GetAllBeestjesByBooking(booking);
             int discount = 0;
 
             if (beestjes.FirstOrDefault(b => b.Name == "Eend") != null)
@@ -74,7 +74,7 @@ namespace DomainServices
 
         private List<Discount> GetCharDiscount(Booking booking)
         {
-            var beestjes = _bookingService.GetBeestjesByBooking(booking);
+            var beestjes = _bookingService.GetAllBeestjesByBooking(booking);
             var discounts = new List<Discount>();
             const char curChar = 'a';
 
@@ -88,7 +88,7 @@ namespace DomainServices
 
         private Discount GetTypeDiscount(Booking booking)
         {
-            var beestjes =  _bookingService.GetBeestjesByBooking(booking);
+            var beestjes =  _bookingService.GetAllBeestjesByBooking(booking);
 
 
             if (beestjes.Count < 3)
