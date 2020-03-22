@@ -34,7 +34,11 @@ namespace Models.Repository
 
         public async Task<List<Beestje>> GetAllWhere(Expression<Func<Beestje, bool>> expression)
         {
-            return await _db.Beestjes.Where(expression).Include(b => b.BookingBeestjes).ToListAsync();
+            return await _db.Beestjes
+                .Where(expression)
+                .Include(b => b.BookingBeestjes)
+                .ThenInclude(b => b.Booking)
+                .ToListAsync();
         }
 
         public async Task<Beestje> Insert(Beestje item)
