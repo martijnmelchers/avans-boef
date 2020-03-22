@@ -45,6 +45,7 @@ namespace Web
             services.AddScoped<IBookingService, BookingService>();
             services.AddScoped<IBeestjeService, BeestjeService>();
             services.AddScoped<IAccessoireService, AccessoireService>();
+            services.AddScoped<IDiscountService, DiscountService>();
 
         }
 

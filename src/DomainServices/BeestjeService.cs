@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using DomainServices.Interfaces;
 using Models;
-using Models.Exceptions;
-using Models.Repository;
 using Models.Repository.Interfaces;
 
 namespace DomainServices

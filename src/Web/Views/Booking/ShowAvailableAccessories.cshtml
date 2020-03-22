@@ -1,0 +1,33 @@
+@model (Models.Booking booking, List<Models.Accessoire> accessoires)
+
+@{
+    ViewBag.Title = "Selecteer accessoires";
+    Layout = "_Layout";
+}
+<div class="row">
+    <div class="col-lg-9">
+        <h2>Selecteer beestjes</h2>
+
+        @using (Html.BeginForm("SelectBeestjes", "Booking", FormMethod.Post))
+        {
+            <div class="row">
+
+                @foreach (var availableAccessoire in Model.accessoires)
+                {
+                    @availableAccessoire.Name
+                }
+            </div>
+            
+            @if (Model.accessoires.Count == 0)
+            {
+                <p>Er zijn geen accessoires beschikbaar!</p>
+            }
+
+            <input class="btn btn-success float-right mt-5" type="submit" value="Selecteren"/>
+        }
+
+    </div>
+    <div class="col-lg-3">
+       <partial name="_BookingDetails" model="Model.booking"/>
+    </div>
+</div>

@@ -11,7 +11,7 @@ using Type = Models.Type;
 
 namespace DomainServices
 {
-    class DiscountService : IDiscountService
+    public class DiscountService : IDiscountService
     {
         private readonly IBookingService _bookingService;
         public DiscountService(IBookingService bookingService)

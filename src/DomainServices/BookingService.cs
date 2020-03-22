@@ -38,7 +38,9 @@ namespace DomainServices
             
             if(DateTime.Now > date)
                 throw new InvalidDateException();
-            
+
+            // Set step to one further
+            booking.Step = BookingStep.Beestjes;
             booking.Date = date;
         }
 
@@ -54,7 +56,7 @@ namespace DomainServices
 
         public List<Beestje> GetBeestjesByBooking(Booking booking)
         {
-            return booking.BookingBeestjes.Select(bb => bb.Beestje).ToList();
+            return booking.BookingBeestjes.Select(b => b.Beestje).ToList();
         }
 
         public async Task SelectBeestjes(string accessToken, List<int> selectedBeestjes)
@@ -64,9 +66,6 @@ namespace DomainServices
             if(booking == null)
                 throw new BookingNotFoundException();
 
-            if(booking.BookingBeestjes == null)
-                booking.BookingBeestjes = new List<BookingBeestje>();
-            
             foreach (var beestjeId in selectedBeestjes)
             {
                 var beestje = await _beestjeRepository.Get(beestjeId);
@@ -79,6 +78,8 @@ namespace DomainServices
                     Beestje =  beestje
                 });
             }
+
+            booking.Step = BookingStep.Accessoires;
         }
     }
 }
