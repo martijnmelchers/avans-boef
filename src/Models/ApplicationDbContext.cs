@@ -28,6 +28,5 @@ namespace Models
         public DbSet<Accessoire> Accessoires { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Beestje> Beestjes { get; set; }
-
     }
 }

@@ -56,9 +56,18 @@ namespace DomainServices
             return booking;
         }
 
-        public List<Beestje> GetBeestjesByBooking(Booking booking)
+        public List<(Beestje beestje, bool available)> GetBeestjesByBooking(Booking booking)
         {
-            return booking.BookingBeestjes.Select(b => b.Beestje).ToList();
+            var beestjes =  booking.BookingBeestjes.Select(b => b.Beestje).ToList();
+
+            List<(Beestje beestje, bool available)> availableBeestjes = new List<(Beestje beestje, bool available)>();
+
+            beestjes.ForEach((beestje) =>
+            {
+                availableBeestjes.Add((beestje, isValid(booking,beestje)));
+            });
+
+            return availableBeestjes;
         }
 
         public async Task SelectBeestjes(string accessToken, List<int> selectedBeestjes)
