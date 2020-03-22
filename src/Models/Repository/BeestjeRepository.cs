@@ -19,7 +19,7 @@ namespace Models.Repository
         
         public async Task<Beestje> Get(int id)
         {
-            return await _db.Beestjes.FirstOrDefaultAsync(x => x.Id == id);
+            return await _db.Beestjes.Include(x => x.BeestjeAccessoires).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<List<Beestje>> GetAll()
@@ -36,7 +36,7 @@ namespace Models.Repository
         {
             return await _db.Beestjes
                 .Where(expression)
-                .Include(b => b.Accessoires)
+                .Include(b => b.BeestjeAccessoires)
                 .Include(b => b.BookingBeestjes)
                 .ThenInclude(b => b.Booking)
                 .ToListAsync();

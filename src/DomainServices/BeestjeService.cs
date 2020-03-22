@@ -35,7 +35,6 @@ namespace DomainServices
         {
              var currentBeestje = await _beestjeRepository.Get(id);
              
-             currentBeestje.Accessoires = beestje.Accessoires;
              currentBeestje.Id         = beestje.Id;
              currentBeestje.Image      = beestje.Image;
              currentBeestje.Name       = beestje.Name;
@@ -64,14 +63,29 @@ namespace DomainServices
 
         public async Task<Beestje> SelectAccessoires(Beestje beestje, List<int> accessoires)
         {
+
+
+            foreach (var beestjeAccessoire in beestje.BeestjeAccessoires.ToList())
+            {
+                if (!accessoires.Contains(beestjeAccessoire.AccessoireId))
+                    beestje.BeestjeAccessoires.Remove(beestjeAccessoire);
+                else
+                    accessoires.Remove(beestjeAccessoire.AccessoireId);
+            }
+
+
+
             foreach (var accessoireId in accessoires)
             {
                 var accessoire = await _accessoireRepository.Get(accessoireId);
-                if (beestje.Accessoires == null)
+
+
+                beestje.BeestjeAccessoires.Add(new BeestjeAccessoires()
                 {
-                    beestje.Accessoires = new List<Accessoire>();
-                }
-                beestje.Accessoires.Add(accessoire);
+                   Beestje = beestje,
+                    Accessoire = accessoire
+                });
+            
             }
 
             return beestje;

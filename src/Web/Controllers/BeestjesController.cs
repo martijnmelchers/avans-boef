@@ -85,8 +85,8 @@ namespace Web.Controllers
                 return NotFound();
             }
 
-            if(beestje.Accessoires == null)
-                beestje.Accessoires = new List<Accessoire>();
+  
+
             ViewBag.Accessoires = await _accessoireService.GetAccessoires();
             return View(beestje);
         }
