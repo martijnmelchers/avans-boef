@@ -107,6 +107,20 @@ namespace DomainServices
             booking.Step = BookingStep.Accessoires;
         }
 
+        public async Task<List<Accessoire>> GetAvailableAccessoires(string accessToken)
+        {
+            var booking = await _bookingRepository.GetByAccessToken(accessToken);
+            var beestjes = booking.BookingBeestjes.Select(x => x.Beestje).ToList();
 
+
+            List<Accessoire> availableAccessoires = new List<Accessoire>();
+            foreach (var beestje in beestjes)
+            {
+                availableAccessoires.AddRange((await _beestjeRepository.Get(beestje.Id)).BeestjeAccessoires.Select(x => x.Accessoire).ToList());
+            }
+
+
+            return availableAccessoires;
+        }
     }
 }

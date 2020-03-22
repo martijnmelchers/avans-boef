@@ -14,8 +14,8 @@ namespace Models
 
         public string Image { get; set; }
 
-        public List<Accessoire> Accessoires { get; set; }
-        public IList<BookingBeestje> BookingBeestjes { get; set; }
 
+        public IList<BookingBeestje> BookingBeestjes { get; set; }
+        public IList<BeestjeAccessoires> BeestjeAccessoires { get; set; }
     }
 }

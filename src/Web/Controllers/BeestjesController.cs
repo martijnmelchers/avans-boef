@@ -13,11 +13,13 @@ namespace Web.Controllers
     public class BeestjesController : BaseController
     {
         private readonly IBeestjeService _beestjeService;
+        private readonly IAccessoireService _accessoireService;
 
 
-        public BeestjesController(ApplicationDbContext db, IBeestjeService beestjeService) : base(db)
+        public BeestjesController(ApplicationDbContext db, IBeestjeService beestjeService,  IAccessoireService accessoireService) : base(db)
         {
             _beestjeService = beestjeService;
+            _accessoireService = accessoireService;
         }
 
         // GET: Beestjes
@@ -63,8 +65,45 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
+
+
             return View(beestje);
         }
+
+
+        // GET: Beestjes/Edit/5
+        public async Task<IActionResult> AddAccessoires(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var beestje = await _beestjeService.GetBeestje(id);
+            if (beestje == null)
+            {
+                return NotFound();
+            }
+
+  
+
+            ViewBag.Accessoires = await _accessoireService.GetAccessoires();
+            return View(beestje);
+        }
+
+
+            // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddAccessoires(int id, [Bind("Accessoires")] List<int> accessoires)
+        {
+            var beestje = await _beestjeService.GetBeestje(id);
+
+            beestje = await _beestjeService.SelectAccessoires(beestje, accessoires);
+            ViewBag.Accessoires = await _accessoireService.GetAccessoires();
+            return View(beestje);
+        }
+
 
         // POST: Beestjes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -73,6 +112,8 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Type,Price,Image")] Beestje beestje)
         {
+
+
             await _beestjeService.EditBeestje(id, beestje);
             return View(beestje);
         }
