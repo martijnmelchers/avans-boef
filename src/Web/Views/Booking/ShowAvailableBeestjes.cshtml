@@ -1,4 +1,4 @@
-@model (Models.Booking booking, List<Models.Beestje> beestjes)
+@model (Models.Booking booking, List<(Models.Beestje beestje, bool available)> beestjes)
 
 @{
     ViewBag.Title = "Selecteer beestjes";
@@ -12,17 +12,17 @@
         {
             <div class="row">
 
-                @foreach (var availableBeestje in Model.beestjes)
+                @foreach (var (beestje, available) in Model.beestjes)
                 {
                     <div class="col-lg-3">
                         <div class="card">
-                            <img src="../../images/@(availableBeestje.Image == string.Empty ? "http://via.placeholder.com/200?text=Geen%20foto" : availableBeestje.Image)" class="card-img-top" alt="Foto van @availableBeestje.Name"/>
+                            <img src="../../images/@(beestje.Image == string.Empty ? "http://via.placeholder.com/200?text=Geen%20foto" : beestje.Image)" class="card-img-top" alt="Foto van @beestje.Name"/>
                             <div class="card-body">
-                                <h5 class="card-title text-center">@availableBeestje.Name</h5>
+                                <h5 class="card-title text-center">@beestje.Name</h5>
                                 <div class="form-check text-center">
-                                    <input class="form-check-input" type="checkbox" name="selectedBeestjes" value="@availableBeestje.Id">
+                                    <input class="form-check-input" type="checkbox" name="selectedBeestjes" value="@beestje.Id" @(available ? "" : "disabled")>
                                     <label class="form-check-label">
-                                        @availableBeestje.Price.ToString("C")
+                                        @beestje.Price.ToString("C")
                                     </label>
                                 </div>
                             </div>

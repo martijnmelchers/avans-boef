@@ -54,13 +54,8 @@ namespace DomainServices
         public async Task<List<(Beestje beestje, bool available)>> GetAvailableBeestjes(Booking booking)
         {
             var beestjes = await _beestjeRepository.GetAllWhere(b => b.BookingBeestjes.FirstOrDefault(bookings => bookings.Booking.Date == booking.Date) == null);
-
-            List<(Beestje beestje, bool available)> availableBeestjes = new List<(Beestje beestje, bool available)>();
-
-            beestjes.ForEach((beestje) =>
-            {
-                availableBeestjes.Add((beestje, isValid(booking, beestje)));
-            });
+            var availableBeestjes = beestjes.Select(beestje => (beestje, isValid(booking, beestje))).ToList();
+            
             return availableBeestjes;
         }
 
