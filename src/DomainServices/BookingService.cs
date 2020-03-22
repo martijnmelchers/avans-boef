@@ -62,6 +62,17 @@ namespace DomainServices
             return booking.BookingBeestjes.Select(b => b.Beestje).ToList();
         }
 
+        public async Task LinkAccountToBooking(string accessToken, string userId)
+        {
+            var booking = await GetBooking(accessToken);
+            
+            if(booking == null)
+                throw new BookingNotFoundException();
+
+            booking.Step = BookingStep.PersonalData;
+            booking.UserId = userId;
+        }
+
         public async Task SelectBeestjes(string accessToken, List<int> selectedBeestjes)
         {
             var booking = await GetBooking(accessToken);

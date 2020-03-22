@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using DomainServices.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -77,7 +78,7 @@ namespace Web.Controllers
                     return RedirectToAction("ShowPricing");
 
                 if (_signInManager.IsSignedIn(User))
-                    return RedirectToAction("SelectPrice");
+                    return RedirectToAction("ShowContactInfo");
 
                 return View("LoginOrRegister", (booking, new Register(), new Login()));
 
@@ -88,6 +89,11 @@ namespace Web.Controllers
             }
         }
 
+        public async Task<IActionResult> ShowContactInfo()
+        {
+            return Ok();
+        }
+        
         public async Task<IActionResult> ShowPricing()
         {
             // TODO: Implement
@@ -119,25 +125,36 @@ namespace Web.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> SelectPrice()
+        public async Task<IActionResult> AddDetailsAndCalculatePrice()
         {
             // TODO: Implement
             return Ok();
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login()
+        public async Task<IActionResult> Login(Login login)
         {
-            // TODO: Login
-            return Ok();
+            var result = await _signInManager.PasswordSignInAsync(login.Email, login.Password, false, false);
+            if (result.Succeeded)
+            {
+                var user = await _signInManager.UserManager.FindByEmailAsync(login.Email);
+                await _bookingService.LinkAccountToBooking(GetAccessToken(), user.Id);
+                
+                return RedirectToAction("ShowContactInfo");
+            }
+
+            // If login failed, show the view again
+            ModelState.AddModelError(string.Empty, "Incorrecte gebruikersnaam en/of wachtwoord!");
+            return await ShowLoginOrRegister();
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register()
+        public async Task<IActionResult> Register(Register register)
         {
             //TODO: Register
             return Ok();
         }
+         
         #endregion
     }
 }

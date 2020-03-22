@@ -13,5 +13,6 @@ namespace DomainServices.Interfaces
         Task SelectBeestjes(string accessToken, List<int> selectedBeestjes);
 
         List<Beestje> GetAllBeestjesByBooking(Booking booking);
+        Task LinkAccountToBooking(string getAccessToken, string userId);
     }
 }
