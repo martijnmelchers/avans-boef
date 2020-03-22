@@ -10,7 +10,7 @@ namespace DomainServices.Interfaces
         Task<string> CreateBooking();
         Task SelectDate(string accessToken, DateTime date);
         Task<Booking> GetBooking(string accessToken);
-        List<Beestje> GetBeestjesByBooking(Booking booking);
+        List<(Beestje beestje, bool available)> GetBeestjesByBooking(Booking booking);
         Task SelectBeestjes(string accessToken, List<int> selectedBeestjes);
     }
 }

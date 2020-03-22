@@ -17,8 +17,9 @@ namespace Models
         {
             AccessToken = Guid.NewGuid().ToString();
         }
+
+        public IList<Discount> Discounts { get; set; }
         public IList<BookingBeestje> BookingBeestjes { get; set; }
         public IList<BookingAccessoires> BookingAccessoires { get; set; }
-
     }
 }
