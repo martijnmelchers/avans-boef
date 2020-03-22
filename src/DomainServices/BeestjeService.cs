@@ -12,11 +12,13 @@ namespace DomainServices
     public class BeestjeService : IBeestjeService
     {
         private readonly IBeestjeRepository _beestjeRepository;
+        private readonly IAccessoireRepository _accessoireRepository;
 
 
-        public BeestjeService(IBeestjeRepository beestjeRepository)
+        public BeestjeService(IBeestjeRepository beestjeRepository, IAccessoireRepository accessoireRepository)
         {
             _beestjeRepository = beestjeRepository;
+            _accessoireRepository = accessoireRepository;
         }
 
         public async Task<Beestje> CreateBeestje(Beestje beestje)
@@ -57,6 +59,22 @@ namespace DomainServices
             var availableBeestjes = beestjes.Select(beestje => (beestje, IsValid(booking.Date, beestje))).ToList();
             
             return availableBeestjes;
+        }
+
+
+        public async Task<Beestje> SelectAccessoires(Beestje beestje, List<int> accessoires)
+        {
+            foreach (var accessoireId in accessoires)
+            {
+                var accessoire = await _accessoireRepository.Get(accessoireId);
+                if (beestje.Accessoires == null)
+                {
+                    beestje.Accessoires = new List<Accessoire>();
+                }
+                beestje.Accessoires.Add(accessoire);
+            }
+
+            return beestje;
         }
 
 

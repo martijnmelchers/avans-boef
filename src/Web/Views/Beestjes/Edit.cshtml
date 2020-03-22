@@ -35,6 +35,9 @@
                 <input asp-for="Image" class="form-control" />
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
+
+            <a asp-action="AddAccessoires" asp-route-id="@Model.Id">Accessoires toevoegen</a>
+
             <div class="form-group">
                 <input type="submit" value="Opslaan" class="btn btn-primary" />
             </div>

@@ -36,6 +36,7 @@ namespace Models.Repository
         {
             return await _db.Beestjes
                 .Where(expression)
+                .Include(b => b.Accessoires)
                 .Include(b => b.BookingBeestjes)
                 .ThenInclude(b => b.Booking)
                 .ToListAsync();
