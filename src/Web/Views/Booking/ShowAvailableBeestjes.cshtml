@@ -1,3 +1,4 @@
+@using Models
 @model (Models.Booking booking, List<(Models.Beestje beestje, bool available)> beestjes)
 
 @{
@@ -20,7 +21,7 @@
                             <div class="card-body">
                                 <h5 class="card-title text-center">@beestje.Name</h5>
                                 <div class="form-check text-center">
-                                    <input class="form-check-input" type="checkbox" name="selectedBeestjes" value="@beestje.Id" @(available ? "" : "disabled")>
+                                    <input class="form-check-input" type="checkbox" name="selectedBeestjes" value="@beestje.Id" @(available ? "" : "disabled") @(Model.booking.BookingBeestjes.FirstOrDefault(x => x.Beestje.Id == beestje.Id) != null ? "checked" : "")>
                                     <label class="form-check-label">
                                         @beestje.Price.ToString("C")
                                     </label>

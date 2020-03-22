@@ -69,6 +69,16 @@ namespace DomainServices
             if(booking == null)
                 throw new BookingNotFoundException();
 
+            
+            foreach (var bookingBeestje in booking.BookingBeestjes.ToList())
+            {
+                if (!selectedBeestjes.Contains(bookingBeestje.BeestjeId))
+                    booking.BookingBeestjes.Remove(bookingBeestje);
+                else
+                    selectedBeestjes.Remove(bookingBeestje.BeestjeId);
+            }
+
+            
             foreach (var beestjeId in selectedBeestjes)
             {
                 var beestje = await _beestjeRepository.Get(beestjeId);
@@ -81,9 +91,9 @@ namespace DomainServices
                     Beestje =  beestje
                 });
             }
+            
 
             booking.Step = BookingStep.Accessoires;
-        
         }
 
 
