@@ -1,3 +1,4 @@
+@using Models
 @model Models.Booking
 
 <div class="card">
@@ -6,11 +7,18 @@
     </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item">
-            <b>Geselecteerde datum</b><br/>
+            <a asp-action="Index" asp-controller="Home">Geselecteerde datum</a><br/>
             @Model.Date.ToString("D")
         </li>
         <li class="list-group-item">
-            <b>Geselecteerde beestjes</b>
+            @if (Model.Step >= BookingStep.Price)
+            {
+                <b>Geselecteerde beestjes</b>
+            }
+            else
+            {
+                <a asp-action="ShowAvailableBeestjes">Geselecteerde beestjes</a>
+            }
             <div class="row">
                 @foreach (var beestje in Model.BookingBeestjes)
                 {
@@ -25,15 +33,28 @@
             }
         </li>
         <li class="list-group-item">
-            <b>Geselecteerde accessories</b>
-            @foreach (var accessoire in Model.BookingAccessoires)
+            @if (Model.Step >= BookingStep.Price)
             {
-                @accessoire.Accessoire.Name
+                <b>Geselecteerde accessoires</b>
             }
+            else
+            {
+                <a asp-action="ShowAvailableAccessories">Geselecteerde accessories</a>
+            }
+            <ul>
+                @foreach (var accessoire in Model.BookingAccessoires)
+                {
+                    <li>@accessoire.Accessoire.Name</li>
+                }
+            </ul>
             @if (Model.BookingAccessoires.Count == 0)
             {
                 <p>Je hebt op dit moment geen accessoires geselecteerd!</p>
             }
+        </li>
+        <li class="list-group-item">
+            <b>Totaal excl. korting</b><br/>
+            @((Model.BookingBeestjes.Sum(x => x.Beestje.Price) + Model.BookingAccessoires.Sum(x => x.Accessoire.Price)).ToString("C"))
         </li>
     </ul>
 </div>

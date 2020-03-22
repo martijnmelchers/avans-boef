@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using DomainServices.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -46,7 +44,7 @@ namespace Web.Controllers
                     return RedirectToAction("ShowPricing");
                 
                 var data = (booking, beestjes);
-                return View(data);
+                return View("ShowAvailableBeestjes", data);
             }
             catch (BookingNotFoundException)
             {
@@ -106,7 +104,7 @@ namespace Web.Controllers
                 if (!_signInManager.IsSignedIn(User))
                     return RedirectToAction("ShowLoginOrRegister");
 
-                return View("LoginOrRegister", (booking, new Register(), new Login()));
+                return View("ShowContactInfo", (booking, new ContactInfo()));
 
             }
             catch (BookingNotFoundException)
@@ -134,6 +132,12 @@ namespace Web.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            catch (CantHaveFarmAnimalException)
+            {
+                ModelState.AddModelError(string.Empty, "Je mag geen beestje boeken met de naam ‘Leeuw’ of ‘IJsbeer’ als je ook een beestje boekt van het type ‘Boerderijdier’");
+
+                return await ShowAvailableBeestjes();
+            }
             
             return RedirectToAction("ShowAvailableAccessories");
         }
@@ -141,9 +145,16 @@ namespace Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> SelectAccessoires(List<int> selectedAccessoires)
         {
-            // TODO: Implement
+            try
+            {
+                await _bookingService.SelectAccessoires(GetAccessToken(), selectedAccessoires);
+            }
+            catch (BookingNotFoundException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
-            return Ok();
+            return RedirectToAction("ShowLoginOrRegister");
         }
 
         [HttpPost, ValidateAntiForgeryToken]

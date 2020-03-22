@@ -1,4 +1,3 @@
-@using Models
 @model (Models.Booking booking, List<(Models.Beestje beestje, bool available)> beestjes)
 
 @{
@@ -7,41 +6,51 @@
 }
 <div class="row">
     <div class="col-lg-9">
-        <h2>Selecteer beestjes</h2>
 
-        @using (Html.BeginForm("SelectBeestjes", "Booking", FormMethod.Post))
-        {
-            <div class="row">
+        <div class="card">
+            <div class="card-header">
+                <h4>Selecteer beestjes</h4>
+            </div>
+            @using (Html.BeginForm("SelectBeestjes", "Booking", FormMethod.Post))
+            {
+                <div class="card-body">
+                    @Html.ValidationSummary(true, "Er ging iets niet goed!", new { @class = "alert alert-danger no-list" })
+                    <div class="row">
 
-                @foreach (var (beestje, available) in Model.beestjes)
-                {
-                    <div class="col-lg-3">
-                        <div class="card">
-                            <img src="../../images/@(beestje.Image == string.Empty ? "http://via.placeholder.com/200?text=Geen%20foto" : beestje.Image)" class="card-img-top" alt="Foto van @beestje.Name"/>
-                            <div class="card-body">
-                                <h5 class="card-title text-center">@beestje.Name</h5>
-                                <div class="form-check text-center">
-                                    <input class="form-check-input" type="checkbox" name="selectedBeestjes" value="@beestje.Id" @(available ? "" : "disabled") @(Model.booking.BookingBeestjes.FirstOrDefault(x => x.Beestje.Id == beestje.Id) != null ? "checked" : "")>
-                                    <label class="form-check-label">
-                                        @beestje.Price.ToString("C")
-                                    </label>
+                        @foreach (var (beestje, available) in Model.beestjes)
+                        {
+                            <div class="col-lg-3">
+                                <div class="card mt-3">
+                                    <img src="../../images/@(beestje.Image == string.Empty ? "http://via.placeholder.com/200?text=Geen%20foto" : beestje.Image)" class="card-img-top" alt="Foto van @beestje.Name"/>
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center">@beestje.Name</h5>
+                                        <div class="form-check text-center">
+                                            <input class="form-check-input" type="checkbox" name="selectedBeestjes" value="@beestje.Id" @(available ? "" : "disabled") @(Model.booking.BookingBeestjes.FirstOrDefault(x => x.Beestje.Id == beestje.Id) != null ? "checked" : "")>
+                                            <label class="form-check-label">
+                                                @beestje.Price.ToString("C")
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     </div>
-                }
-            </div>
-            
-            @if (Model.beestjes.Count == 0)
-            {
-                <p>Er zijn op deze datum geen beestjes beschikbaar!</p>
-            }
 
-            <input class="btn btn-success float-right mt-5" type="submit" value="Selecteren"/>
-        }
+                    @if (Model.beestjes.Count == 0)
+                    {
+                        <p>Er zijn op deze datum geen beestjes beschikbaar!</p>
+                    }
+
+                </div>
+                <div class="card-footer text-right">
+                    <input class="btn btn-success" type="submit" value="Selecteren"/>
+                </div>
+            }
+        </div>
+
 
     </div>
     <div class="col-lg-3">
-       <partial name="_BookingDetails" model="Model.booking"/>
+        <partial name="_BookingDetails" model="Model.booking"/>
     </div>
 </div>

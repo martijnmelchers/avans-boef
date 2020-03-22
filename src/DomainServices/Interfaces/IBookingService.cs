@@ -7,13 +7,14 @@ namespace DomainServices.Interfaces
 {
     public interface IBookingService
     {
-        Task<string> CreateBooking();
-        Task SelectDate(string accessToken, DateTime date);
         Task<Booking> GetBooking(string accessToken);
-        Task SelectBeestjes(string accessToken, List<int> selectedBeestjes);
-
         List<Beestje> GetAllBeestjesByBooking(Booking booking);
         Task<List<Accessoire>> GetAvailableAccessoires(string accessToken);
-        Task LinkAccountToBooking(string getAccessToken, string userId);
+        
+        Task<string> CreateBooking();
+        Task SelectDate(string accessToken, DateTime date);
+        Task SelectBeestjes(string accessToken, List<int> selectedBeestjes);
+        Task LinkAccountToBooking(string accessToken, string userId);
+        Task SelectAccessoires(string accessToken, List<int> selectedAccessoires);
     }
 }

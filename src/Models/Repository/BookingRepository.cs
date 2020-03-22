@@ -73,7 +73,7 @@ namespace Models.Repository
                 .ThenInclude(x => x.Beestje)
                 .Include(x => x.BookingAccessoires)
                 .ThenInclude(x => x.Accessoire)
-                
+                .Include(x => x.Discounts)
                 .FirstOrDefaultAsync(x => x.AccessToken == accessToken);
         }
 

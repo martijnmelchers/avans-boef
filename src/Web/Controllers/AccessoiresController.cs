@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DomainServices.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using Models;
 
 namespace Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AccessoiresController : BaseController
     {
         private readonly IAccessoireService _accessoireService;

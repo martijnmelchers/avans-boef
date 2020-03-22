@@ -55,7 +55,7 @@ namespace DomainServices
         public async Task<List<(Beestje beestje, bool available)>> GetAvailableBeestjes(Booking booking)
         {
             var beestjes = await _beestjeRepository.GetAllWhere(b => b.BookingBeestjes.FirstOrDefault(bookings => bookings.Booking.Date == booking.Date && !bookings.Booking.Equals(booking)) == null);
-            var availableBeestjes = beestjes.Select(beestje => (beestje, IsValid(booking.Date, beestje))).ToList();
+            var availableBeestjes = beestjes.Select(beestje => (beestje, IsAvailable(booking.Date, beestje))).ToList();
             
             return availableBeestjes;
         }
@@ -63,8 +63,6 @@ namespace DomainServices
 
         public async Task<Beestje> SelectAccessoires(Beestje beestje, List<int> accessoires)
         {
-
-
             foreach (var beestjeAccessoire in beestje.BeestjeAccessoires.ToList())
             {
                 if (!accessoires.Contains(beestjeAccessoire.AccessoireId))
@@ -72,14 +70,11 @@ namespace DomainServices
                 else
                     accessoires.Remove(beestjeAccessoire.AccessoireId);
             }
-
-
-
+            
             foreach (var accessoireId in accessoires)
             {
                 var accessoire = await _accessoireRepository.Get(accessoireId);
-
-
+                
                 beestje.BeestjeAccessoires.Add(new BeestjeAccessoires()
                 {
                    Beestje = beestje,
@@ -92,7 +87,7 @@ namespace DomainServices
         }
 
 
-        private static bool IsValid(DateTime date, Beestje beestje)
+        private static bool IsAvailable(DateTime date, Beestje beestje)
         {
             if (beestje.Name == "Penguïn")
                 if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
