@@ -112,7 +112,7 @@ namespace Web.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> SelectAccessoires()
+        public async Task<IActionResult> SelectAccessoires(List<int> selectedAccessoires)
         {
             // TODO: Implement
             return Ok();

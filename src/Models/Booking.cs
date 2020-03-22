@@ -10,9 +10,9 @@ namespace Models
         public string AccessToken { get; set; }
         public DateTime Date { get; set; }
         public BookingStep Step { get; set; }
-
-
-
+        public decimal InitialPrice { get; set; }
+        public decimal FinalPrice { get; set; }
+        
         public Booking()
         {
             AccessToken = Guid.NewGuid().ToString();
