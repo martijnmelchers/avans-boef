@@ -115,7 +115,9 @@ namespace Web.Controllers
                 var booking = await _bookingService.GetBooking(GetAccessToken());
 
                 if (booking.Step != BookingStep.Price)
-                    return RedirectToAction("ShowContactInfo");
+                    return booking.Step == BookingStep.Finished
+                        ? RedirectToAction("Details", new { id = booking.Id})
+                        : RedirectToAction("ShowContactInfo");
 
                 if (!_signInManager.IsSignedIn(User))
                     return RedirectToAction("ShowLoginOrRegister");
@@ -128,6 +130,27 @@ namespace Web.Controllers
             }
         }
 
+        [Authorize]
+        public async Task<IActionResult> Details(int id)
+        {
+            try
+            {
+                var booking = await _bookingService.GetBookingById(id);
+
+                var user = await _userManager.GetUserAsync(User);
+
+                if (booking.UserId != user.Id)
+                    return RedirectToAction("Index", "Home");
+
+                return View("Details", booking);
+
+            }
+            catch (BookingNotFoundException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+        
         #region POST Actions
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -181,6 +204,24 @@ namespace Web.Controllers
             }
 
             return RedirectToAction("ShowPricing");
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> ConfirmBooking()
+        {
+            try
+            {
+                var booking = await _bookingService.GetBooking(GetAccessToken());
+                await _bookingService.ConfirmBooking(GetAccessToken());
+                
+                // Remove access token, we're done!
+                RemoveAccessToken();
+                
+                return RedirectToAction("Details", new { id = booking.Id });
+            }  catch (BookingNotFoundException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpPost, ValidateAntiForgeryToken]

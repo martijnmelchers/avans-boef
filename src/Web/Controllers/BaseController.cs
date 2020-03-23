@@ -39,7 +39,12 @@ namespace Web.Controllers
 
         public string GetAccessToken()
         {
-            return TempData["AccessToken"].ToString();
+            return TempData["AccessToken"]?.ToString();
+        }
+
+        public void RemoveAccessToken()
+        {
+            TempData["AccessToken"] = null;
         }
 
         #endregion

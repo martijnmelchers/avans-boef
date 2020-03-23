@@ -17,10 +17,16 @@ namespace Models.Repository
         {
             _db = db;
         }
-        
+
         public async Task<Booking> Get(int id)
         {
-            return await _db.Bookings.FirstOrDefaultAsync(x => x.Id == id);
+            return await _db.Bookings
+                .Include(x => x.BookingBeestjes)
+                .ThenInclude(x => x.Beestje)
+                .Include(x => x.BookingAccessoires)
+                .ThenInclude(x => x.Accessoire)
+                .Include(x => x.Discounts)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<List<Booking>> GetAll()
@@ -87,6 +93,5 @@ namespace Models.Repository
             var bookingBeestje = await _db.BookingBeestjes.Where(b => b.Beestje == beestje).ToListAsync();
             return bookingBeestje;
         }
-
     }
 }
