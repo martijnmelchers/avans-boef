@@ -62,7 +62,7 @@ namespace DomainServices
             int discount = 0;
 
             if (beestjes.FirstOrDefault(b => b.Name == "Eend") != null)
-                if (new Random().Next(1, 6) == 0)
+                if (new Random().Next(0, 5) == 0)
                     discount += 50;
 
             return discount == 0 ? null : new Discount("1 op 6 kans met naam: Eend", discount);

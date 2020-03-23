@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using DomainServices;
+using Microsoft.EntityFrameworkCore.Query;
 using Models;
 using Models.Repository;
 using UnitTests.Helpers;
@@ -86,6 +87,47 @@ namespace UnitTests.Discount
             
             Assert.NotEmpty(discounts);
             Assert.True((discounts.Sum(x => x.Percentage) <= 60));
+        }
+
+
+        [Fact]
+        private async void ShouldGetDuckDiscount()
+        {
+            bool randomAchieved = false;
+            int tries = 0;
+            while (randomAchieved == false)
+            {
+                await _bookingService.CalculateFinalPrice(_modelMocks.Bookings[7].AccessToken); // Order with Name "Eend"
+                await _db.SaveChangesAsync(); // Manual save
+
+                var discounts = (await _bookingService.GetBooking(_modelMocks.Bookings[7].AccessToken)).Discounts;
+
+
+                if ((discounts.Count > 0))
+                {
+                    randomAchieved = true;
+                    break;
+                }
+                
+                Assert.NotEqual(1000, tries);
+                tries++;
+            }
+
+            var disc = (await _bookingService.GetBooking(_modelMocks.Bookings[7].AccessToken)).Discounts;
+            Assert.Single(disc);
+            Assert.True(randomAchieved);
+        }
+
+
+        [Fact]
+        private async void ShouldGetTypeDiscount()
+        {
+            await _bookingService.CalculateFinalPrice(_modelMocks.Bookings[8].AccessToken);
+            await _db.SaveChangesAsync(); // Manual save
+
+            var discounts = (await _bookingService.GetBooking(_modelMocks.Bookings[8].AccessToken)).Discounts;
+            Assert.Single(discounts);
+            Assert.Equal(10, discounts[0].Percentage);
         }
     }
 }
