@@ -14,20 +14,17 @@ namespace Web.Controllers
     {
         private readonly IBookingService _bookingService;
         private readonly IBeestjeService _beestjeService;
-        private readonly IDiscountService _discountService;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
         public BookingController(
-            ApplicationDbContext db, IBookingService bookingService,
-            IDiscountService discountService, IBeestjeService beestjeService,
-            SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,
-            RoleManager<IdentityRole> roleManager) : base(db)
+            ApplicationDbContext db, IBookingService bookingService, 
+            IBeestjeService beestjeService, SignInManager<IdentityUser> signInManager, 
+            UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager) : base(db)
         {
             _bookingService = bookingService;
             _beestjeService = beestjeService;
-            _discountService = discountService;
             _signInManager = signInManager;
             _userManager = userManager;
             _roleManager = roleManager;
@@ -113,8 +110,22 @@ namespace Web.Controllers
 
         public async Task<IActionResult> ShowPricing()
         {
-            // TODO: Implement
-            return Ok();
+            try
+            {
+                var booking = await _bookingService.GetBooking(GetAccessToken());
+
+                if (booking.Step != BookingStep.Price)
+                    return RedirectToAction("ShowContactInfo");
+
+                if (!_signInManager.IsSignedIn(User))
+                    return RedirectToAction("ShowLoginOrRegister");
+
+                return View("ShowPricing", booking);
+            }
+            catch (BookingNotFoundException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         #region POST Actions
@@ -159,8 +170,17 @@ namespace Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> AddDetailsAndCalculatePrice(ContactInfo contactInfo)
         {
-            // TODO: Implement
-            return Ok();
+            try
+            {
+                await _bookingService.SaveContactInfo(GetAccessToken(), contactInfo);
+                await _bookingService.CalculateFinalPrice(GetAccessToken());
+            }
+            catch (BookingNotFoundException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return RedirectToAction("ShowPricing");
         }
 
         [HttpPost, ValidateAntiForgeryToken]
