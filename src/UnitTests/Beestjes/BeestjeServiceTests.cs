@@ -9,7 +9,7 @@ using UnitTests.Helpers;
 using Xunit;
 using Type = Models.Type;
 
-namespace UnitTests
+namespace UnitTests.Beestjes
 {
     [Collection("Database collection")]
     public class BeestjeServiceTests
@@ -36,9 +36,8 @@ namespace UnitTests
             _beestjeService = new BeestjeService(beestjeRepository, accessoireRepository);
         }
 
-
         [Fact]
-        public async  void CanAddGet()
+        public async  void CanAddBeestje()
         {
             var savedBeestje = await _beestjeService.CreateBeestje(_testBeestje);
             
@@ -54,6 +53,38 @@ namespace UnitTests
             Assert.Equal(_modelMocks.Beestjes.Count, beestjes.Count);
         }
 
+        [Fact]
+        public async void CanEditBeestje()
+        {
+            var beestje = await _beestjeService.GetBeestje(2);
+            beestje.Name = "Joep";
+            beestje.Price = 300;
+            beestje.Image = "ijsbeer.png";
+            beestje.Type = Type.Sneeuw;
+
+            await _beestjeService.EditBeestje(2, beestje);
+
+            var beestjeUpdated = await _beestjeService.GetBeestje(2);
+
+            Assert.True((beestjeUpdated.Name == "Joep"));
+        }
+
+        [Fact]
+        public async void CanDeleteBeestje()
+        {
+            await _beestjeService.DeleteBeestje(1);
+            _modelMocks.Beestjes.Remove(_modelMocks.Beestjes[0]);
+            Assert.Null(await _beestjeService.GetBeestje(1));
+        }
+
+        [Fact]
+        public async void CanGetAvailableBeesjes()
+        {
+            var booking = _modelMocks.Bookings[2];
+            var availableBeestjes =  await  _beestjeService.GetAvailableBeestjes(booking);
+            Assert.NotEmpty(availableBeestjes);
+            Assert.False(availableBeestjes[8].available);
+        }
 
         private readonly BeestjeService _beestjeService;
     }

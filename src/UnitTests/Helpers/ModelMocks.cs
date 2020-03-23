@@ -11,18 +11,19 @@ namespace UnitTests.Helpers
     public class ModelMocks
     {
         public List<Beestje> Beestjes { get; set; }
-        public List<Accessoire> Accessoires { get; set; }
-        public List<Booking> Bookings { get; set; }
+        public List<Models.Accessoire> Accessoires { get; set; }
+        public List<Models.Booking> Bookings { get; set; }
         public ModelMocks()
         {
-            Accessoires = new List<Accessoire>()
+           
+            Accessoires = new List<Models.Accessoire>()
             {
-                new Accessoire() { Id = 1, Image = "ijsbeer.png", Name = "Banaan", Price = 3 },
-                new Accessoire() { Id = 2, Image = "ijsbeer.png", Name = "Zadel", Price = 50 },
-                new Accessoire() { Id = 3, Image = "ijsbeer.png", Name = "Krukje", Price = 60 },
-                new Accessoire() { Id = 4, Image = "ijsbeer.png", Name = "Zweep", Price = 20 },
-                new Accessoire() { Id = 5, Image = "ijsbeer.png", Name = "Bal", Price = 10 },
-                new Accessoire() { Id = 6, Image = "ijsbeer.png", Name = "Dansschoenen", Price = 200 },
+                new  Models.Accessoire() { Id = 1, Image = "ijsbeer.png", Name = "Banaan", Price = 3 },
+                new  Models.Accessoire() { Id = 2, Image = "ijsbeer.png", Name = "Zadel", Price = 50 },
+                new  Models.Accessoire() { Id = 3, Image = "ijsbeer.png", Name = "Krukje", Price = 60 },
+                new  Models.Accessoire() { Id = 4, Image = "ijsbeer.png", Name = "Zweep", Price = 20 },
+                new  Models.Accessoire() { Id = 5, Image = "ijsbeer.png", Name = "Bal", Price = 10 },
+                new  Models.Accessoire() { Id = 6, Image = "ijsbeer.png", Name = "Dansschoenen", Price = 200 },
             };
 
             Beestjes = new List<Beestje>()
@@ -97,7 +98,7 @@ namespace UnitTests.Helpers
                 },
                 new Beestje()
                 {
-                    Id = 10, Name = "Pinquïn", Type = Type.Sneeuw, Price = 200, BeestjeAccessoires =
+                    Id = 10, Name = "Penguïn", Type = Type.Sneeuw, Price = 200, BeestjeAccessoires =
                         new List<BeestjeAccessoires>()
                         {
                             new BeestjeAccessoires() { AccessoireId = 6, BeestjeId = 10 }
@@ -135,11 +136,12 @@ namespace UnitTests.Helpers
             };
 
 
-            Bookings = new List<Booking>()
+            Bookings = new List<Models.Booking>()
             {
-                new Booking()
+                new Models.Booking()
                 {
                     Id = 1,
+                    Date =  new DateTime(2020,03,22),
                     BookingBeestjes = new List<BookingBeestje>()
                     {
                         new BookingBeestje() { BeestjeId = 1, BookingId = 1 }
@@ -156,7 +158,7 @@ namespace UnitTests.Helpers
                     FinalPrice = 198.94m,
                     Step = BookingStep.Finished,
                 },
-                new Booking()
+                new Models.Booking()
                 {
                     Id = 2,
                     BookingBeestjes = new List<BookingBeestje>()
@@ -169,6 +171,20 @@ namespace UnitTests.Helpers
                     },
                     InitialPrice = 203,
                     Step = BookingStep.Price,
+                },
+                new Models.Booking()
+                {
+                    Id = 3,
+                    Date =  new DateTime(2020,03,22),
+                    BookingBeestjes = new List<BookingBeestje>()
+                    {
+                        new BookingBeestje() { BeestjeId = 10, BookingId = 3 }
+                    },
+                    BookingAccessoires = new List<BookingAccessoires>()
+                    {
+                        new BookingAccessoires() { BookingId = 3, AccessoireId = 6 }
+                    },
+                    Step = BookingStep.Beestjes
                 },
             };
 

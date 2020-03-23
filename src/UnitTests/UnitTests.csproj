@@ -24,12 +24,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Beestjes\" />
+      <ProjectReference Include="..\DomainServices\DomainServices.csproj" />
+      <ProjectReference Include="..\Models\Models.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\DomainServices\DomainServices.csproj" />
-      <ProjectReference Include="..\Models\Models.csproj" />
+      <Folder Include="Discount\" />
     </ItemGroup>
 
 </Project>
