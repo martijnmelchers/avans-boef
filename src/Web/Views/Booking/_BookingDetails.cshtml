@@ -7,7 +7,14 @@
     </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item">
-            <a asp-action="Index" asp-controller="Home">Geselecteerde datum</a><br/>
+             @if (Model.Step >= BookingStep.Price)    
+            {
+                <b>Geselecteerde datum</b>
+            }
+            else
+            {
+                <a asp-action="Index" asp-controller="Home">Geselecteerde datum</a><br/>
+            }
             @Model.Date.ToString("D")
         </li>
         <li class="list-group-item">
@@ -56,5 +63,12 @@
             <b>Totaal excl. korting</b><br/>
             @((Model.BookingBeestjes.Sum(x => x.Beestje.Price) + Model.BookingAccessoires.Sum(x => x.Accessoire.Price)).ToString("C"))
         </li>
+        @if (Model.Step == BookingStep.Price)
+        {
+            <li class="list-group-item">
+                <b>Totaal incl. korting</b><br/>
+                @Model.FinalPrice.ToString("C")
+            </li>
+        }
     </ul>
 </div>

@@ -1,0 +1,58 @@
+@model Models.Booking
+
+@{
+    ViewBag.Title = "Prijs";
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-lg-9">
+        <div class="card">
+            <div class="card-header">
+                <h4>Prijs</h4>
+            </div>
+            @using (Html.BeginForm("AddDetailsAndCalculatePrice", "Booking", FormMethod.Post))
+            {
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+
+                            <h5>Beestjes</h5>
+                            <ul>
+                                @foreach (var beestje in Model.BookingBeestjes)
+                                {
+                                    <li>@beestje.Beestje.Name (@beestje.Beestje.Price.ToString("C"))</li>
+                                }
+                            </ul>
+
+                            <h5>Accessoires</h5>
+                            <ul>
+                                @foreach (var accessoire in Model.BookingAccessoires)
+                                {
+                                    <li>@accessoire.Accessoire.Name (@accessoire.Accessoire.Price.ToString("C"))</li>
+                                }
+                            </ul>
+
+                            <h5>Kortingen</h5>
+                            <ul>
+                                @foreach (var discount in Model.Discounts)
+                                {
+                                    <li>@discount.Reason (@discount.Percentage% korting)</li>
+                                }
+                            </ul>
+                            
+                            <p>Subtotaal: <b>@Model.InitialPrice.ToString("C")</b></p>
+                            <p>Totaal incl. korting: <b>@Model.FinalPrice.ToString("C")</b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <input type="submit" value="Bevestigen" class="btn btn-success"/>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <partial name="_BookingDetails" model="Model"/>
+    </div>
+</div>

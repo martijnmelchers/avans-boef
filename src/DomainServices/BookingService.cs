@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DomainServices.Interfaces;
 using Models;
 using Models.Exceptions;
+using Models.Form;
 using Models.Repository;
 using Models.Repository.Interfaces;
 using DayOfWeek = System.DayOfWeek;
@@ -17,14 +18,16 @@ namespace DomainServices
     {
         private readonly IBookingRepository _bookingRepository;
         private readonly IBeestjeRepository _beestjeRepository;
+        private readonly IDiscountService _discountService;
         private readonly IAccessoireRepository _accessoireRepository;
 
         public BookingService(IBookingRepository bookingRepository, IBeestjeRepository beestjeRepository,
-            IAccessoireRepository accessoireRepository)
+            IAccessoireRepository accessoireRepository, IDiscountService discountService)
         {
             _bookingRepository = bookingRepository;
             _beestjeRepository = beestjeRepository;
             _accessoireRepository = accessoireRepository;
+            _discountService = discountService;
         }
 
         public async Task<string> CreateBooking()
@@ -59,12 +62,6 @@ namespace DomainServices
                 throw new BookingNotFoundException();
 
             return booking;
-        }
-
-
-        public List<Beestje> GetAllBeestjesByBooking(Booking booking)
-        {
-            return booking.BookingBeestjes.Select(b => b.Beestje).ToList();
         }
 
         public async Task LinkAccountToBooking(string accessToken, string userId)
@@ -140,6 +137,26 @@ namespace DomainServices
             }
 
             booking.Step = BookingStep.Login;
+        }
+
+        public async Task SaveContactInfo(string accessToken, ContactInfo contactInfo)
+        {
+            var booking = await GetBooking(accessToken);
+            
+            booking.Address = contactInfo.Address;
+            booking.Name = contactInfo.Name;
+            booking.PhoneNumber = contactInfo.PhoneNumber;
+        }
+
+        public async Task CalculateFinalPrice(string accessToken)
+        {
+            var booking = await GetBooking(accessToken);
+
+            booking.InitialPrice = (decimal) (booking.BookingBeestjes.Select(x => x.Beestje).Sum(x => x.Price) + booking.BookingAccessoires.Select(x => x.Accessoire).Sum(x => x.Price));
+            booking.Discounts = _discountService.GetDiscount(booking);
+            var totalDiscount = booking.Discounts.Sum(x => x.Percentage);
+            booking.FinalPrice = booking.InitialPrice - (booking.InitialPrice / 100 * totalDiscount);
+            booking.Step = BookingStep.Price;
         }
 
 

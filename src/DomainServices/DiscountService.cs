@@ -13,12 +13,6 @@ namespace DomainServices
 {
     public class DiscountService : IDiscountService
     {
-        private readonly IBookingService _bookingService;
-        public DiscountService(IBookingService bookingService)
-        {
-            _bookingService = bookingService;
-        }
-
         public List<Discount> GetDiscount(Booking booking)
         {
             var discounts = new List<Discount>();
@@ -62,7 +56,7 @@ namespace DomainServices
 
         private Discount GetDuckNameDiscount(Booking booking)
         {
-            var beestjes = _bookingService.GetAllBeestjesByBooking(booking);
+            var beestjes = GetAllBeestjesByBooking(booking);
             int discount = 0;
 
             if (beestjes.FirstOrDefault(b => b.Name == "Eend") != null)
@@ -74,13 +68,14 @@ namespace DomainServices
 
         private List<Discount> GetCharDiscount(Booking booking)
         {
-            var beestjes = _bookingService.GetAllBeestjesByBooking(booking);
+            var beestjes = GetAllBeestjesByBooking(booking);
             var discounts = new List<Discount>();
-            const char curChar = 'a';
+            char curChar = 'a';
 
             while (beestjes.FirstOrDefault(b => b.Name.Contains(curChar)) != null)
             {
                 discounts.Add(new Discount("Beestje met de letter: " + curChar,2));
+                curChar++;
             }
 
             return discounts;
@@ -88,7 +83,7 @@ namespace DomainServices
 
         private Discount GetTypeDiscount(Booking booking)
         {
-            var beestjes =  _bookingService.GetAllBeestjesByBooking(booking);
+            var beestjes =  GetAllBeestjesByBooking(booking);
 
 
             if (beestjes.Count < 3)
@@ -97,6 +92,11 @@ namespace DomainServices
             var types =  beestjes.Select(b => b.Type).ToList();
 
             return types.Any(type => types.Count(x => x.Equals(type)) == 3) ? new Discount("3 items van het zelfde type", 10) : null;
+        }
+
+        private static List<Beestje> GetAllBeestjesByBooking(Booking booking)
+        {
+            return booking.BookingBeestjes.Select(b => b.Beestje).ToList();
         }
     }
 }
