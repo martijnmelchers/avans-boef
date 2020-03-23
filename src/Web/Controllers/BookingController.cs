@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using DomainServices.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -18,16 +16,21 @@ namespace Web.Controllers
         private readonly IBeestjeService _beestjeService;
         private readonly IDiscountService _discountService;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public BookingController(
             ApplicationDbContext db, IBookingService bookingService,
-            IDiscountService discountService,
-            IBeestjeService beestjeService, SignInManager<IdentityUser> signInManager) : base(db)
+            IDiscountService discountService, IBeestjeService beestjeService,
+            SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager) : base(db)
         {
             _bookingService = bookingService;
             _beestjeService = beestjeService;
             _discountService = discountService;
             _signInManager = signInManager;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         public async Task<IActionResult> ShowAvailableBeestjes()
@@ -39,9 +42,9 @@ namespace Web.Controllers
 
                 if (booking.Step >= BookingStep.Price)
                     return RedirectToAction("ShowPricing");
-                
+
                 var data = (booking, beestjes);
-                return View(data);
+                return View("ShowAvailableBeestjes", data);
             }
             catch (BookingNotFoundException)
             {
@@ -58,7 +61,7 @@ namespace Web.Controllers
 
                 if (booking.Step >= BookingStep.Price)
                     return RedirectToAction("ShowPricing");
-                
+
                 var data = (booking, accessoires);
                 return View(data);
             }
@@ -81,7 +84,6 @@ namespace Web.Controllers
                     return RedirectToAction("ShowContactInfo");
 
                 return View("LoginOrRegister", (booking, new Register(), new Login()));
-
             }
             catch (BookingNotFoundException)
             {
@@ -91,9 +93,24 @@ namespace Web.Controllers
 
         public async Task<IActionResult> ShowContactInfo()
         {
-            return Ok();
+            try
+            {
+                var booking = await _bookingService.GetBooking(GetAccessToken());
+
+                if (booking.Step >= BookingStep.Price)
+                    return RedirectToAction("ShowPricing");
+
+                if (!_signInManager.IsSignedIn(User))
+                    return RedirectToAction("ShowLoginOrRegister");
+
+                return View("ShowContactInfo", (booking, new ContactInfo()));
+            }
+            catch (BookingNotFoundException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
-        
+
         public async Task<IActionResult> ShowPricing()
         {
             // TODO: Implement
@@ -113,20 +130,34 @@ namespace Web.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            
+            catch (CantHaveFarmAnimalException)
+            {
+                ModelState.AddModelError(string.Empty,
+                    "Je mag geen beestje boeken met de naam ‘Leeuw’ of ‘IJsbeer’ als je ook een beestje boekt van het type ‘Boerderijdier’");
+
+                return await ShowAvailableBeestjes();
+            }
+
             return RedirectToAction("ShowAvailableAccessories");
         }
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> SelectAccessoires(List<int> selectedAccessoires)
         {
-            // TODO: Implement
+            try
+            {
+                await _bookingService.SelectAccessoires(GetAccessToken(), selectedAccessoires);
+            }
+            catch (BookingNotFoundException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
-            return Ok();
+            return RedirectToAction("ShowLoginOrRegister");
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddDetailsAndCalculatePrice()
+        public async Task<IActionResult> AddDetailsAndCalculatePrice(ContactInfo contactInfo)
         {
             // TODO: Implement
             return Ok();
@@ -138,9 +169,9 @@ namespace Web.Controllers
             var result = await _signInManager.PasswordSignInAsync(login.Email, login.Password, false, false);
             if (result.Succeeded)
             {
-                var user = await _signInManager.UserManager.FindByEmailAsync(login.Email);
+                var user = await _userManager.FindByEmailAsync(login.Email);
                 await _bookingService.LinkAccountToBooking(GetAccessToken(), user.Id);
-                
+
                 return RedirectToAction("ShowContactInfo");
             }
 
@@ -152,10 +183,33 @@ namespace Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(Register register)
         {
-            //TODO: Register
-            return Ok();
+            var result =
+                await _userManager.CreateAsync(new IdentityUser { UserName = register.Email, Email = register.Email },
+                    register.Password);
+            if (result.Succeeded)
+            {
+                var user = await _userManager.FindByEmailAsync(register.Email);
+
+                if (register.IsAdmin)
+                {
+                    // If the role does not exist yet we need to create it once, need to find better solution if this was ever be used...
+                    if (!await _roleManager.RoleExistsAsync("Admin"))
+                        await _roleManager.CreateAsync(new IdentityRole("Admin"));
+
+                    await _userManager.AddToRoleAsync(user, "Admin");
+                }
+
+                await _signInManager.SignInAsync(user, false);
+                await _bookingService.LinkAccountToBooking(GetAccessToken(), user.Id);
+
+                return RedirectToAction("ShowContactInfo");
+            }
+
+            // If register failed, show the view again
+            ModelState.AddModelError(string.Empty, "Er is iets misgegaan tijdens de registratie!");
+            return await ShowLoginOrRegister();
         }
-         
+
         #endregion
     }
 }

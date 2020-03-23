@@ -6,28 +6,48 @@
 }
 <div class="row">
     <div class="col-lg-9">
-        <h2>Selecteer accesoires</h2>
-
-        @using (Html.BeginForm("SelectAccessoires", "Booking", FormMethod.Post))
-        {
-            <div class="row">
-
-                @foreach (var availableAccessoire in Model.accessoires)
-                {
-                    @availableAccessoire.Name
-                }
+        <div class="card">
+            <div class="card-header">
+                <h4>Selecteer accessoires</h4>
             </div>
-            
-            @if (Model.accessoires.Count == 0)
+            @using (Html.BeginForm("SelectAccessoires", "Booking", FormMethod.Post))
             {
-                <p>Er zijn geen accessoires beschikbaar!</p>
-            }
+                <div class="card-body">
+                    @Html.ValidationSummary(true, "Er ging iets niet goed!", new { @class = "alert alert-danger no-list" })
+                    <div class="row">
 
-            <input class="btn btn-success float-right mt-5" type="submit" value="Selecteren"/>
-        }
+                        @foreach (var accessoire in Model.accessoires)
+                        {
+                            <div class="col-lg-3">
+                                <div class="card mt-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center">@accessoire.Name</h5>
+                                        <div class="form-check text-center">
+                                            <input class="form-check-input" type="checkbox" name="selectedAccessoires" value="@accessoire.Id" @(Model.booking.BookingAccessoires.FirstOrDefault(x => x.Accessoire.Id == accessoire.Id) != null ? "checked" : "")>
+                                            <label class="form-check-label">
+                                                @accessoire.Price.ToString("C")
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    @if (Model.accessoires.Count == 0)
+                    {
+                        <p>Er zijn geen accessoires beschikbaar voor deze beestjes!</p>
+                    }
+
+                </div>
+                <div class="card-footer text-right">
+                    <input class="btn btn-success" type="submit" value="Selecteren"/>
+                </div>
+            }
+        </div>
 
     </div>
     <div class="col-lg-3">
-       <partial name="_BookingDetails" model="Model.booking"/>
+        <partial name="_BookingDetails" model="Model.booking"/>
     </div>
 </div>

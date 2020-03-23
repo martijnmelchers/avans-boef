@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DomainServices.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,14 +11,15 @@ using Models;
 
 namespace Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AccessoiresController : BaseController
     {
         private readonly IAccessoireService _accessoireService;
 
 
-        public AccessoiresController(ApplicationDbContext db, IAccessoireService Accessoireservice) : base(db)
+        public AccessoiresController(ApplicationDbContext db, IAccessoireService accessoireService) : base(db)
         {
-            _accessoireService = Accessoireservice;
+            _accessoireService = accessoireService;
         }
 
         // GET: Accessoires
@@ -44,23 +46,19 @@ namespace Web.Controllers
                 Accessoire = await _accessoireService.CreateAccessoire(Accessoire);
                 return RedirectToAction(nameof(Index));
             }
+
             return View(Accessoire);
         }
 
         // GET: Accessoires/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
+            var accessoire = await _accessoireService.GetAccessoire(id);
+            
+            if (accessoire == null)
                 return NotFound();
-            }
 
-            var Accessoire = await _accessoireService.GetAccessoire(id);
-            if (Accessoire == null)
-            {
-                return NotFound();
-            }
-            return View(Accessoire);
+            return View(accessoire);
         }
 
         // POST: Accessoires/Edit/5
@@ -68,27 +66,20 @@ namespace Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Type,Price,Image")] Accessoire Accessoire)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Type,Price,Image")] Accessoire accessoire)
         {
-            await _accessoireService.EditAccessoire(id, Accessoire);
-            return View(Accessoire);
+            await _accessoireService.EditAccessoire(id, accessoire);
+            return View(accessoire);
         }
 
         // GET: Accessoires/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
+            var accessoire = await _accessoireService.GetAccessoire(id);
+            if (accessoire == null)
                 return NotFound();
-            }
 
-            var Accessoire = await _accessoireService.GetAccessoire(id);
-            if (Accessoire == null)
-            {
-                return NotFound();
-            }
-
-            return View(Accessoire);
+            return View(accessoire);
         }
 
         //POST: Accessoires/Delete/5
@@ -96,13 +87,8 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-             await _accessoireService.DeleteAccessoire(id);
+            await _accessoireService.DeleteAccessoire(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool AccessoireExists(int id)
-        {
-            return _accessoireService.GetAccessoire(id) != null;
         }
     }
 }
