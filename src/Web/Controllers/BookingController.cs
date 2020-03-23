@@ -213,7 +213,10 @@ namespace Web.Controllers
             {
                 var booking = await _bookingService.GetBooking(GetAccessToken());
                 await _bookingService.ConfirmBooking(GetAccessToken());
-
+                
+                // Remove access token, we're done!
+                RemoveAccessToken();
+                
                 return RedirectToAction("Details", new { id = booking.Id });
             }  catch (BookingNotFoundException)
             {
