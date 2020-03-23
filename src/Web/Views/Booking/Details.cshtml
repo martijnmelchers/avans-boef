@@ -1,7 +1,7 @@
 @model Models.Booking
 
 @{
-    ViewBag.Title = "Prijs";
+    ViewBag.Title = "Details voor je boeking";
     Layout = "_Layout";
 }
 
@@ -9,9 +9,9 @@
     <div class="col-lg-9">
         <div class="card">
             <div class="card-header">
-                <h4>Prijs</h4>
+                <h4>Boeking details</h4>
             </div>
-            @using (Html.BeginForm("ConfirmBooking", "Booking", FormMethod.Post))
+            @using (Html.BeginForm("AddDetailsAndCalculatePrice", "Booking", FormMethod.Post))
             {
                 <div class="card-body">
                     <div class="row">
@@ -45,9 +45,6 @@
                             <p>Totaal incl. korting: <b>@Model.FinalPrice.ToString("C")</b></p>
                         </div>
                     </div>
-                </div>
-                <div class="card-footer text-right">
-                    <input type="submit" value="Bevestigen" class="btn btn-success"/>
                 </div>
             }
         </div>
