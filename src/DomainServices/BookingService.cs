@@ -184,6 +184,11 @@ namespace DomainServices
             return booking;
         }
 
+        public async Task<List<Booking>> GetBookingByUserId(string userId)
+        {
+            return await _bookingRepository.GetAllWhere(x => x.UserId == userId && x.Step == BookingStep.Finished);
+        }
+
 
         public async Task<List<Accessoire>> GetAvailableAccessoires(string accessToken)
         {

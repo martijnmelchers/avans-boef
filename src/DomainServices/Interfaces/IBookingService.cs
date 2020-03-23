@@ -19,5 +19,6 @@ namespace DomainServices.Interfaces
         Task CalculateFinalPrice(string accessToken);
         Task ConfirmBooking(string getAccessToken);
         Task<Booking> GetBookingById(int id);
+        Task<List<Booking>> GetBookingByUserId(string userId);
     }
 }

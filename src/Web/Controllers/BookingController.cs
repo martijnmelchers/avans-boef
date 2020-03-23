@@ -150,6 +150,25 @@ namespace Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+
+        [Authorize]
+        public async Task<IActionResult> Index()
+        {
+            try
+            {
+                var user = await _userManager.GetUserAsync(User);
+                var bookings = await _bookingService.GetBookingByUserId(user.Id);
+                
+                return View("Index", bookings);
+
+            }
+            catch (BookingNotFoundException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+        
+        
         
         #region POST Actions
 
