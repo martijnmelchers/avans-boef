@@ -152,11 +152,36 @@ namespace DomainServices
         {
             var booking = await GetBooking(accessToken);
 
+            // Calculate initial price
             booking.InitialPrice = (decimal) (booking.BookingBeestjes.Select(x => x.Beestje).Sum(x => x.Price) + booking.BookingAccessoires.Select(x => x.Accessoire).Sum(x => x.Price));
-            booking.Discounts = await _discountService.GetDiscount(booking.AccessToken);
+            
+            // Calculate the discounts
+            booking.Discounts = _discountService.GetDiscount(booking);
+            
+            // Get the percentage and calculate the final price
             var totalDiscount = booking.Discounts.Sum(x => x.Percentage);
             booking.FinalPrice = booking.InitialPrice - (booking.InitialPrice / 100 * totalDiscount);
+            
+            // Set step to price so they can't change info
             booking.Step = BookingStep.Price;
+        }
+
+        public async Task ConfirmBooking(string accessToken)
+        {
+            var booking = await GetBooking(accessToken);
+            
+            // Set booking to confirmed, and we are done!
+            booking.Step = BookingStep.Finished;
+        }
+
+        public async Task<Booking> GetBookingById(int id)
+        {
+            var booking = await _bookingRepository.Get(id);
+            
+            if(booking == null)
+                throw new BookingNotFoundException();
+
+            return booking;
         }
 
 

@@ -17,5 +17,7 @@ namespace DomainServices.Interfaces
         Task SelectAccessoires(string accessToken, List<int> selectedAccessoires);
         Task SaveContactInfo(string accessToken, ContactInfo contactInfo);
         Task CalculateFinalPrice(string accessToken);
+        Task ConfirmBooking(string getAccessToken);
+        Task<Booking> GetBookingById(int id);
     }
 }
