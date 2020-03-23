@@ -41,16 +41,24 @@ namespace UnitTests.Discount
         [Fact]
         public async void ShouldGetNoDiscount()
         {
-            var booking = await _bookingService.GetBooking(_modelMocks.Bookings[2].AccessToken);
-            var discounts =  _discountService.GetDiscount(booking);
+            await _bookingService.CalculateFinalPrice(_modelMocks.Bookings[2].AccessToken);
+            await _db.SaveChangesAsync(); // Manual save
+
+            var discounts = (await _bookingService.GetBooking(_modelMocks.Bookings[2].AccessToken)).Discounts;
+            
             Assert.Empty(discounts);
         }
 
         [Fact]
         public async void ShouldGetNameDiscount()
         {
-            var booking = await _bookingService.GetBooking(_modelMocks.Bookings[6].AccessToken);
-            var discounts =  _discountService.GetDiscount(booking);
+            /*var booking = await _bookingService.GetBooking(_modelMocks.Bookings[6].AccessToken);
+            var discounts =  _discountService.GetDiscount(booking);*/
+            
+            await _bookingService.CalculateFinalPrice(_modelMocks.Bookings[6].AccessToken);
+            await _db.SaveChangesAsync(); // Manual save
+
+            var discounts = (await _bookingService.GetBooking(_modelMocks.Bookings[6].AccessToken)).Discounts;
 
             Assert.Single(discounts);
             Assert.Equal(2, discounts[0].Percentage);
@@ -60,18 +68,22 @@ namespace UnitTests.Discount
         [Fact]
         public async void ShouldGetDayDiscount()
         {
-            var booking = await _bookingService.GetBooking(_modelMocks.Bookings[4].AccessToken);
-            var discounts =  _discountService.GetDiscount(booking);
+            await _bookingService.CalculateFinalPrice(_modelMocks.Bookings[4].AccessToken);
+            await _db.SaveChangesAsync(); // Manual save
 
-            Assert.Single(discounts);
-            Assert.True((discounts.Sum(x => x.Percentage) == 15));
+            var discounts = (await _bookingService.GetBooking(_modelMocks.Bookings[4].AccessToken)).Discounts;
+            
+            Assert.True((discounts.Sum(x => x.Percentage) == 17));
         }
 
         [Fact]
         public async void ShouldNotGetOverSixtyDiscount()
         {
-            var booking = await _bookingService.GetBooking(_modelMocks.Bookings[5].AccessToken);
-            var discounts =  _discountService.GetDiscount(booking);
+            await _bookingService.CalculateFinalPrice(_modelMocks.Bookings[5].AccessToken);
+            await _db.SaveChangesAsync(); // Manual save
+
+            var discounts = (await _bookingService.GetBooking(_modelMocks.Bookings[5].AccessToken)).Discounts;
+            
             Assert.NotEmpty(discounts);
             Assert.True((discounts.Sum(x => x.Percentage) <= 60));
         }

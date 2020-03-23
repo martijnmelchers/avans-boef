@@ -36,13 +36,13 @@ namespace DomainServices
 
             var totalDiscount = 0;
 
-            discounts.ForEach(discount =>
+            foreach (var discount in discounts.ToList())
             {
                 if (totalDiscount + discount.Percentage > 60)
                     discounts.Remove(discount);
                 else
                     totalDiscount += discount.Percentage;
-            });
+            }
 
             return discounts;
         }
