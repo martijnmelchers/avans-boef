@@ -17,18 +17,19 @@ namespace UnitTests.Booking
     {
         private readonly ModelMocks _modelMocks;
         private readonly BookingService _bookingService;
-
+        private readonly ApplicationDbContext _db;
 
         public BookingServiceTests(DatabaseFixture fixture)
         {
-            _modelMocks = fixture.Mocks;
             var bookingRepository = new BookingRepository(fixture.Db);
             var beestjeRepository = new BeestjeRepository(fixture.Db);
             var accessoireRepository = new AccessoireRepository(fixture.Db);
 
-
             var discountService = new DiscountService();
             _bookingService = new BookingService(bookingRepository,beestjeRepository,accessoireRepository, discountService);
+
+            _modelMocks = fixture.Mocks;
+            _db = fixture.Db;
         }
 
         [Fact]
@@ -67,6 +68,7 @@ namespace UnitTests.Booking
             };
 
             await _bookingService.SelectBeestjes(booking.AccessToken, selectedBeestjes);
+            _db.SaveChanges(); // Usually controller calls savechanges but now we do it manually.
 
             var beestjes =  booking.BookingBeestjes.Select(b => b.Beestje).ToList();
 
@@ -84,6 +86,7 @@ namespace UnitTests.Booking
             };
 
             await _bookingService.SelectAccessoires(booking.AccessToken, selectedAccessoires);
+            _db.SaveChanges(); // Usually controller calls savechanges but now we do it manually.
 
             booking = await _bookingService.GetBooking(booking.AccessToken);
             Assert.Equal(selectedAccessoires.Count, booking.BookingBeestjes.Count);
