@@ -3,25 +3,42 @@
     ViewData["Title"] = "AddAccessoires";
 }
 
-<h1>AddAccessoires</h1>
+<h1>Accessoires</h1>
 
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                Accessoires toevoegen of verwijderen
+            </div>
 
-<div class="container">
-    @using (Html.BeginForm("AddAccessoires", "Beestjes", FormMethod.Post))
-    {
-        foreach (var item in ViewBag.Accessoires)
+        @using (Html.BeginForm("AddAccessoires", "Beestjes", FormMethod.Post))
         {
-            <div class="checkbox">
-                <label>
-                    <input class="form-check-input" type="checkbox" name="Accessoires" value="@item.Id" @(Model.BeestjeAccessoires.Select(x => x.AccessoireId).ToList().Contains(item.Id) ? "checked" : "")>
-                    @item.Name
-                </label>
+            <div class="card-body" style="padding-left: 40px">
+
+                @foreach (var item in ViewBag.Accessoires)
+                {
+                    <div class="checkbox">
+                        <label>
+                            <input class="form-check-input" type="checkbox" name="Accessoires" value="@item.Id" @(Model.BeestjeAccessoires.Select(x => x.AccessoireId).ToList().Contains(item.Id) ? "checked" : "")>
+                            @item.Name
+                        </label>
+                    </div>
+                }
+
+            </div>
+
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-lg-6 text-left align-content-center">
+                        <a asp-action="Index">Terug naar lijst</a>
+                    </div>
+                    <div class="col-lg-6 text-right">
+                        <input type="submit" value="Opslaan" class="btn btn-success"/>
+                    </div>
+                </div>
             </div>
         }
-        <div class="form-group text-center">
-            <input type="submit" class="btn btn-primary" value="Submit" />
         </div>
-
-        <a asp-action="Edit" asp-route-id="@Model.Id">Terug naar bewerken </a>
-    }
+    </div>
 </div>
