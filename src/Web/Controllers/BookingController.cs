@@ -21,7 +21,7 @@ namespace Web.Controllers
 
         public BookingController(
             ApplicationDbContext db, IBookingService bookingService,
-            IDiscountService discountService, IBeestjeService beestjeService, 
+            IDiscountService discountService, IBeestjeService beestjeService,
             SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager) : base(db)
         {
@@ -42,7 +42,7 @@ namespace Web.Controllers
 
                 if (booking.Step >= BookingStep.Price)
                     return RedirectToAction("ShowPricing");
-                
+
                 var data = (booking, beestjes);
                 return View("ShowAvailableBeestjes", data);
             }
@@ -61,7 +61,7 @@ namespace Web.Controllers
 
                 if (booking.Step >= BookingStep.Price)
                     return RedirectToAction("ShowPricing");
-                
+
                 var data = (booking, accessoires);
                 return View(data);
             }
@@ -84,7 +84,6 @@ namespace Web.Controllers
                     return RedirectToAction("ShowContactInfo");
 
                 return View("LoginOrRegister", (booking, new Register(), new Login()));
-
             }
             catch (BookingNotFoundException)
             {
@@ -105,14 +104,13 @@ namespace Web.Controllers
                     return RedirectToAction("ShowLoginOrRegister");
 
                 return View("ShowContactInfo", (booking, new ContactInfo()));
-
             }
             catch (BookingNotFoundException)
             {
                 return RedirectToAction("Index", "Home");
             }
         }
-        
+
         public async Task<IActionResult> ShowPricing()
         {
             // TODO: Implement
@@ -134,11 +132,12 @@ namespace Web.Controllers
             }
             catch (CantHaveFarmAnimalException)
             {
-                ModelState.AddModelError(string.Empty, "Je mag geen beestje boeken met de naam ‘Leeuw’ of ‘IJsbeer’ als je ook een beestje boekt van het type ‘Boerderijdier’");
+                ModelState.AddModelError(string.Empty,
+                    "Je mag geen beestje boeken met de naam ‘Leeuw’ of ‘IJsbeer’ als je ook een beestje boekt van het type ‘Boerderijdier’");
 
                 return await ShowAvailableBeestjes();
             }
-            
+
             return RedirectToAction("ShowAvailableAccessories");
         }
 
@@ -172,7 +171,7 @@ namespace Web.Controllers
             {
                 var user = await _userManager.FindByEmailAsync(login.Email);
                 await _bookingService.LinkAccountToBooking(GetAccessToken(), user.Id);
-                
+
                 return RedirectToAction("ShowContactInfo");
             }
 
@@ -184,7 +183,9 @@ namespace Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(Register register)
         {
-            var result = await _userManager.CreateAsync(new IdentityUser { UserName = register.Email, Email = register.Email }, register.Password);
+            var result =
+                await _userManager.CreateAsync(new IdentityUser { UserName = register.Email, Email = register.Email },
+                    register.Password);
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByEmailAsync(register.Email);
@@ -194,7 +195,7 @@ namespace Web.Controllers
                     // If the role does not exist yet we need to create it once, need to find better solution if this was ever be used...
                     if (!await _roleManager.RoleExistsAsync("Admin"))
                         await _roleManager.CreateAsync(new IdentityRole("Admin"));
-                    
+
                     await _userManager.AddToRoleAsync(user, "Admin");
                 }
 
@@ -203,12 +204,12 @@ namespace Web.Controllers
 
                 return RedirectToAction("ShowContactInfo");
             }
-            
+
             // If register failed, show the view again
             ModelState.AddModelError(string.Empty, "Er is iets misgegaan tijdens de registratie!");
             return await ShowLoginOrRegister();
         }
-         
+
         #endregion
     }
 }

@@ -15,7 +15,7 @@ namespace Web.Controllers
         {
             _db = db;
         }
-        
+
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             if ((await next.Invoke()).Exception == null)
@@ -43,6 +43,5 @@ namespace Web.Controllers
         }
 
         #endregion
-        
     }
 }

@@ -26,7 +26,7 @@ namespace Web.Controllers
 
             return View();
         }
-        
+
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(DateSelection date)
         {
@@ -44,22 +44,19 @@ namespace Web.Controllers
                 SetAccessToken(await _bookingService.CreateBooking());
                 ModelState.AddModelError(string.Empty, "Er is iets fout gegaan, probeer het opnieuw!");
 
-                
+
                 return View("Index", date);
             }
             catch (InvalidDateException)
             {
                 ModelState.AddModelError(string.Empty, "Selecteer een datum die in de toekomst ligt");
-                
+
                 return View("Index", date);
             }
         }
 
         public IActionResult OrderStart()
         {
-
-
-
             return Ok();
         }
 
