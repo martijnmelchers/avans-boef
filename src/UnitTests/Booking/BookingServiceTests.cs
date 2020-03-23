@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using DomainServices;
 using Models;
+using Models.Exceptions;
 using Models.Repository;
 using UnitTests.Helpers;
 using Xunit;
@@ -24,7 +26,9 @@ namespace UnitTests.Booking
             var beestjeRepository = new BeestjeRepository(fixture.Db);
             var accessoireRepository = new AccessoireRepository(fixture.Db);
 
-            _bookingService = new BookingService(bookingRepository,beestjeRepository,accessoireRepository);
+
+            var discountService = new DiscountService();
+            _bookingService = new BookingService(bookingRepository,beestjeRepository,accessoireRepository, discountService);
         }
 
         [Fact]
@@ -64,7 +68,7 @@ namespace UnitTests.Booking
 
             await _bookingService.SelectBeestjes(booking.AccessToken, selectedBeestjes);
 
-            var beestjes = _bookingService.GetAllBeestjesByBooking(booking);
+            var beestjes =  booking.BookingBeestjes.Select(b => b.Beestje).ToList();
 
             Assert.Equal(selectedBeestjes.Count, beestjes.Count);
         }
@@ -83,6 +87,12 @@ namespace UnitTests.Booking
 
             booking = await _bookingService.GetBooking(booking.AccessToken);
             Assert.Equal(selectedAccessoires.Count, booking.BookingBeestjes.Count);
+        }
+
+        [Fact]
+        public async void InvalidAccessTokenThrowsException()
+        {
+            await Assert.ThrowsAsync<BookingNotFoundException>(async () => await _bookingService.GetBooking("Sascha is een slechte programmeur"));
         }
     }
 }
