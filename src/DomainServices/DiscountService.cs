@@ -13,8 +13,10 @@ namespace DomainServices
 {
     public class DiscountService : IDiscountService
     {
+
         public List<Discount> GetDiscount(Booking booking)
         {
+
             var discounts = new List<Discount>();
             var typeDiscount = GetTypeDiscount(booking);
 
