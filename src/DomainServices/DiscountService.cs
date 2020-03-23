@@ -13,8 +13,10 @@ namespace DomainServices
 {
     public class DiscountService : IDiscountService
     {
+
         public List<Discount> GetDiscount(Booking booking)
         {
+
             var discounts = new List<Discount>();
             var typeDiscount = GetTypeDiscount(booking);
 
@@ -34,13 +36,13 @@ namespace DomainServices
 
             var totalDiscount = 0;
 
-            discounts.ForEach(discount =>
+            foreach (var discount in discounts.ToList())
             {
                 if (totalDiscount + discount.Percentage > 60)
                     discounts.Remove(discount);
                 else
                     totalDiscount += discount.Percentage;
-            });
+            }
 
             return discounts;
         }
@@ -60,7 +62,7 @@ namespace DomainServices
             int discount = 0;
 
             if (beestjes.FirstOrDefault(b => b.Name == "Eend") != null)
-                if (new Random().Next(1, 6) == 0)
+                if (new Random().Next(0, 5) == 0)
                     discount += 50;
 
             return discount == 0 ? null : new Discount("1 op 6 kans met naam: Eend", discount);
