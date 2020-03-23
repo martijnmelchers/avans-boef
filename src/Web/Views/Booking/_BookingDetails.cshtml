@@ -41,7 +41,7 @@
             {
                 <a asp-action="ShowAvailableAccessories">Geselecteerde accessories</a>
             }
-            <ul>
+                <ul>
                 @foreach (var accessoire in Model.BookingAccessoires)
                 {
                     <li>@accessoire.Accessoire.Name</li>
