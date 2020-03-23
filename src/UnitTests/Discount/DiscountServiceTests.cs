@@ -18,6 +18,7 @@ namespace UnitTests.Discount
         private readonly ModelMocks _modelMocks;
         private readonly DiscountService _discountService;
         private readonly ApplicationDbContext _db;
+        private readonly BookingService _bookingService;
 
 
 
@@ -28,26 +29,28 @@ namespace UnitTests.Discount
             var accessoireRepository = new AccessoireRepository(fixture.Db);
 
 
-            var discountService = new DiscountService(new BookingService(bookingRepository,beestjeRepository,accessoireRepository));
+            var discountService = new DiscountService();
+            
 
             _modelMocks = fixture.Mocks;
             _db = fixture.Db;
             _discountService = discountService;
+            _bookingService = new BookingService(bookingRepository,beestjeRepository,accessoireRepository, discountService);
         }
 
         [Fact]
         public async void ShouldGetNoDiscount()
         {
-            var booking = _modelMocks.Bookings[2]; //Booking id 3 with Penguin attached.
-            var discounts = await _discountService.GetDiscount(booking.AccessToken);
+            var booking = await _bookingService.GetBooking(_modelMocks.Bookings[2].AccessToken);
+            var discounts =  _discountService.GetDiscount(booking);
             Assert.Empty(discounts);
         }
 
         [Fact]
         public async void ShouldGetNameDiscount()
         {
-            var booking = _modelMocks.Bookings[6];
-            var discounts = await _discountService.GetDiscount(booking.AccessToken);
+            var booking = await _bookingService.GetBooking(_modelMocks.Bookings[6].AccessToken);
+            var discounts =  _discountService.GetDiscount(booking);
 
             Assert.Single(discounts);
             Assert.Equal(2, discounts[0].Percentage);
@@ -57,8 +60,8 @@ namespace UnitTests.Discount
         [Fact]
         public async void ShouldGetDayDiscount()
         {
-            var booking = _modelMocks.Bookings[4];
-            var discounts = await _discountService.GetDiscount(booking.AccessToken);
+            var booking = await _bookingService.GetBooking(_modelMocks.Bookings[4].AccessToken);
+            var discounts =  _discountService.GetDiscount(booking);
 
             Assert.Single(discounts);
             Assert.True((discounts.Sum(x => x.Percentage) == 15));
@@ -67,8 +70,8 @@ namespace UnitTests.Discount
         [Fact]
         public async void ShouldNotGetOverSixtyDiscount()
         {
-            var booking = _modelMocks.Bookings[5];
-            var discounts = await _discountService.GetDiscount(booking.AccessToken);
+            var booking = await _bookingService.GetBooking(_modelMocks.Bookings[5].AccessToken);
+            var discounts =  _discountService.GetDiscount(booking);
             Assert.NotEmpty(discounts);
             Assert.True((discounts.Sum(x => x.Percentage) <= 60));
         }

@@ -13,16 +13,9 @@ namespace DomainServices
 {
     public class DiscountService : IDiscountService
     {
-        private IBookingService _bookingService;
 
-        public DiscountService(IBookingService bookingService)
+        public List<Discount> GetDiscount(Booking booking)
         {
-            _bookingService = bookingService;
-        }
-
-        public async Task<List<Discount>> GetDiscount(string accessToken)
-        {
-            var booking = await _bookingService.GetBooking(accessToken);
 
             var discounts = new List<Discount>();
             var typeDiscount = GetTypeDiscount(booking);
