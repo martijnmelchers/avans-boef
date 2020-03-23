@@ -1,11 +1,7 @@
-using System.Collections.Generic;
-using System.Text;
 using DomainServices;
-using Models;
 using Models.Repository;
 using UnitTests.Helpers;
 using Xunit;
-using Type = System.Type;
 
 namespace UnitTests.Accessoire
 {
@@ -20,7 +16,6 @@ namespace UnitTests.Accessoire
         private static readonly Models.Accessoire _testAccessoire = new Models.Accessoire()
         {
             Name = "test accessoire",
-            Image = "test.png",
             Price = 200,
             Id = 1000
         };

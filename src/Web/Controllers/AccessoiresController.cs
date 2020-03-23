@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using DomainServices.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Models;
 
 namespace Web.Controllers
@@ -39,15 +34,12 @@ namespace Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Type,Price,Image")] Accessoire Accessoire)
+        public async Task<IActionResult> Create([Bind("Id,Name,Type,Price,Image")] Accessoire accessoire)
         {
-            if (ModelState.IsValid)
-            {
-                Accessoire = await _accessoireService.CreateAccessoire(Accessoire);
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(Accessoire);
+            if (!ModelState.IsValid) return View(accessoire);
+            
+            await _accessoireService.CreateAccessoire(accessoire);
+            return RedirectToAction("Index");
         }
 
         // GET: Accessoires/Edit/5

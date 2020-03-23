@@ -26,9 +26,9 @@ namespace DomainServices
             return await _beestjeRepository.Insert(beestje);
         }
 
-        public async Task DeleteBeestje(int Id)
+        public async Task DeleteBeestje(int id)
         {
-            await _beestjeRepository.Delete(Id);
+            await _beestjeRepository.Delete(id);
         }
 
         public async Task EditBeestje(int id, Beestje beestje)
@@ -75,7 +75,7 @@ namespace DomainServices
             {
                 var accessoire = await _accessoireRepository.Get(accessoireId);
                 
-                beestje.BeestjeAccessoires.Add(new BeestjeAccessoires()
+                beestje.BeestjeAccessoires.Add(new BeestjeAccessoires
                 {
                    Beestje = beestje,
                     Accessoire = accessoire
@@ -89,16 +89,16 @@ namespace DomainServices
 
         private static bool IsAvailable(DateTime date, Beestje beestje)
         {
-            if (beestje.Name == "Penguïn")
-                if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
-                    return false;
+            if (beestje.Name != "Penguïn")
+                return beestje.Type switch
+                {
+                    Type.Sneeuw when date.Month >= 6 && date.Month <= 8 => false,
+                    Type.Woestijn when date.Month >= 10 && date.Month <= 12 || date.Month >= 1 && date.Month <= 2 =>
+                    false,
+                    _ => true
+                };
 
-            return beestje.Type switch
-            {
-                Type.Sneeuw when date.Month >= 6 && date.Month <= 8 => false,
-                Type.Woestijn when (date.Month >= 10 && date.Month <= 12) || (date.Month >= 1 && date.Month <= 2) => false,
-                _ => true
-            };
+            return date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
         }
     }
 }

@@ -1,13 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
 using DomainServices.Interfaces;
 using Models;
-using Type = Models.Type;
 
 namespace DomainServices
 {
@@ -48,7 +43,7 @@ namespace DomainServices
         }
 
 
-        private Discount GetDateDiscount(Booking booking)
+        private static Discount GetDateDiscount(Booking booking)
         {
             if(booking.Date.DayOfWeek == DayOfWeek.Monday || booking.Date.DayOfWeek == DayOfWeek.Tuesday)
                 return new Discount("De dag is maandag of dinsdag", 15);
@@ -56,23 +51,21 @@ namespace DomainServices
             return null;
         }
 
-        private Discount GetDuckNameDiscount(Booking booking)
+        private static Discount GetDuckNameDiscount(Booking booking)
         {
             var beestjes = GetAllBeestjesByBooking(booking);
-            int discount = 0;
 
-            if (beestjes.FirstOrDefault(b => b.Name == "Eend") != null)
-                if (new Random().Next(0, 5) == 0)
-                    discount += 50;
-
-            return discount == 0 ? null : new Discount("1 op 6 kans met naam: Eend", discount);
+            if (beestjes.FirstOrDefault(b => b.Name == "Eend") == null)
+                return null;
+            
+            return new Random().Next(0, 5) == 0 ? null : new Discount("1 op 6 kans met naam: Eend", 50);
         }
 
-        private List<Discount> GetCharDiscount(Booking booking)
+        private static IEnumerable<Discount> GetCharDiscount(Booking booking)
         {
             var beestjes = GetAllBeestjesByBooking(booking);
             var discounts = new List<Discount>();
-            char curChar = 'a';
+            var curChar = 'a';
 
             while (beestjes.FirstOrDefault(b => b.Name.Contains(curChar)) != null)
             {
@@ -83,7 +76,7 @@ namespace DomainServices
             return discounts;
         }
 
-        private Discount GetTypeDiscount(Booking booking)
+        private static Discount GetTypeDiscount(Booking booking)
         {
             var beestjes =  GetAllBeestjesByBooking(booking);
 

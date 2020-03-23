@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using DomainServices.Interfaces;
 using Models;
 using Models.Exceptions;
 using Models.Form;
-using Models.Repository;
 using Models.Repository.Interfaces;
-using DayOfWeek = System.DayOfWeek;
 using Type = Models.Type;
 
 namespace DomainServices
@@ -160,7 +157,7 @@ namespace DomainServices
             
             // Get the percentage and calculate the final price
             var totalDiscount = booking.Discounts.Sum(x => x.Percentage);
-            booking.FinalPrice = booking.InitialPrice - (booking.InitialPrice / 100 * totalDiscount);
+            booking.FinalPrice = booking.InitialPrice - booking.InitialPrice / 100 * totalDiscount;
             
             // Set step to price so they can't change info
             booking.Step = BookingStep.Price;

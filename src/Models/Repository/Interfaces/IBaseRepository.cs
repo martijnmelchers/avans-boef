@@ -9,14 +9,8 @@ namespace Models.Repository.Interfaces
     {
         Task<TOut> Get(int id);
         Task<List<TOut>> GetAll();
-
-        Task<TOut> GetWhere(Expression<Func<TOut, bool>> expression);
         Task<List<TOut>> GetAllWhere(Expression<Func<TOut, bool>> expression);
-
         Task<TOut> Insert(TOut item);
-        Task<List<TOut>> InsertAll(List<TOut> items);
-        
         Task Delete(int id);
-        Task DeleteWhere(Expression<Func<TOut, bool>> expression);
     }
 }

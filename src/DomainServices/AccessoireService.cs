@@ -1,11 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using DomainServices.Interfaces;
 using Models;
-using Models.Exceptions;
-using Models.Repository;
 using Models.Repository.Interfaces;
 
 namespace DomainServices
@@ -27,7 +23,6 @@ namespace DomainServices
         public async Task DeleteAccessoire(int id)
         {
             await _accessoireRepository.Delete(id);
-            return;
         }
 
         public async Task EditAccessoire(int id, Accessoire accessoire)
@@ -35,7 +30,6 @@ namespace DomainServices
              var currentAccessoire = await _accessoireRepository.Get(id);
              
              currentAccessoire.Id         = accessoire.Id;
-             currentAccessoire.Image      = accessoire.Image;
              currentAccessoire.Name       = accessoire.Name;
              currentAccessoire.Price      = accessoire.Price;
         }

@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using DomainServices;
 using Models;
 using Models.Exceptions;
+using Models.Form;
 using Models.Repository;
 using UnitTests.Helpers;
 using Xunit;
@@ -90,7 +90,7 @@ namespace UnitTests.Booking
             _db.SaveChanges(); // Usually controller calls savechanges but now we do it manually.
 
 
-            selectedBeestjes = new List<int>()
+            selectedBeestjes = new List<int>
             {
                 _modelMocks.Beestjes[0].Id,
             };
@@ -104,7 +104,7 @@ namespace UnitTests.Booking
 
             var beestjes = booking.BookingBeestjes.Select(b => b.Beestje).ToList();
 
-            Assert.Equal(1, beestjes.Count);
+            Assert.Single(beestjes);
         }
 
         [Fact]
@@ -112,22 +112,54 @@ namespace UnitTests.Booking
         {
             var booking = await _bookingService.GetBooking(_modelMocks.Bookings[0].AccessToken);
 
-            var selectedAccessoires = new List<int>()
+            var selectedAccessoires = new List<int>
             {
-                _modelMocks.Accessoires[0].Id,
+                _modelMocks.Accessoires[0].Id
             };
 
             await _bookingService.SelectAccessoires(booking.AccessToken, selectedAccessoires);
             _db.SaveChanges(); // Usually controller calls savechanges but now we do it manually.
 
             booking = await _bookingService.GetBooking(booking.AccessToken);
-            Assert.Equal(selectedAccessoires.Count, booking.BookingBeestjes.Count);
+            Assert.Equal(1, booking.BookingBeestjes.Count);
         }
 
         [Fact]
         public async void InvalidAccessTokenThrowsException()
         {
             await Assert.ThrowsAsync<BookingNotFoundException>(async () => await _bookingService.GetBooking("Sascha is een slechte programmeur"));
+        }
+
+        [Fact]
+        public async void LinkAccount()
+        {
+            const string userId = "abc-def-ghi";
+            await _bookingService.LinkAccountToBooking(_modelMocks.Bookings[0].AccessToken, userId);
+
+            await _db.SaveChangesAsync(); // Save manually
+            
+            var booking = await _bookingService.GetBooking(_modelMocks.Bookings[0].AccessToken);
+            Assert.Equal(userId, booking.UserId);
+        }
+
+        [Fact]
+        public async void SaveContactInfo()
+        {
+            var personalInfo = new ContactInfo()
+            {
+                Name = "Tester",
+                Address = "Avans Hogeschool",
+                PhoneNumber = "06123123123"
+            };
+
+            await _bookingService.SaveContactInfo(_modelMocks.Bookings[0].AccessToken, personalInfo);
+            
+            await _db.SaveChangesAsync(); // Save manually
+            
+            var booking = await _bookingService.GetBooking(_modelMocks.Bookings[0].AccessToken);
+            Assert.Equal(personalInfo.Name, booking.Name);
+            Assert.Equal(personalInfo.Address, booking.Address);
+            Assert.Equal(personalInfo.PhoneNumber, booking.PhoneNumber);
         }
     }
 }

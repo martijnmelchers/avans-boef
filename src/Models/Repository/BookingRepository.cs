@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -81,17 +80,6 @@ namespace Models.Repository
                 .ThenInclude(x => x.Accessoire)
                 .Include(x => x.Discounts)
                 .FirstOrDefaultAsync(x => x.AccessToken == accessToken);
-        }
-
-        public async Task<List<BookingBeestje>> GetBookingBeestjeByDate(DateTime date)
-        {
-            return await _db.BookingBeestjes.Where(b => b.Booking.Date.Equals(date)).ToListAsync();
-        }
-
-        public async Task<List<BookingBeestje>> GetBookingsByBeestje(Beestje beestje)
-        {
-            var bookingBeestje = await _db.BookingBeestjes.Where(b => b.Beestje == beestje).ToListAsync();
-            return bookingBeestje;
         }
     }
 }

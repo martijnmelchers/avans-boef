@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace UnitTests
+namespace UnitTests.Helpers
 {
     [CollectionDefinition("Database collection")]
     public class DatabaseCollection : ICollectionFixture<DatabaseFixture>

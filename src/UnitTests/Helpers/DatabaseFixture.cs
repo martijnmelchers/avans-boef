@@ -1,8 +1,7 @@
 using System;
 using Models;
-using UnitTests.Helpers;
 
-namespace UnitTests
+namespace UnitTests.Helpers
 {
     public class DatabaseFixture : IDisposable
     {

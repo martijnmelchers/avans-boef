@@ -1,10 +1,7 @@
 using System.Collections.Generic;
-using System.Text;
 using DomainServices;
-using Microsoft.EntityFrameworkCore;
 using Models;
 using Models.Repository;
-using Moq;
 using UnitTests.Helpers;
 using Xunit;
 using Type = Models.Type;
