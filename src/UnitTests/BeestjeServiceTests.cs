@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Text;
 using DomainServices;
@@ -12,11 +11,12 @@ using Type = Models.Type;
 
 namespace UnitTests
 {
+    [Collection("Database collection")]
     public class BeestjeServiceTests
     {
-        private ModelMocks _modelMocks;
-
-        private static Beestje testBeestje = new Beestje()
+        private readonly ModelMocks _modelMocks;
+        
+        private static readonly Beestje _testBeestje = new Beestje()
         {
             BeestjeAccessoires = new List<BeestjeAccessoires>(),
             BookingBeestjes = new List<BookingBeestje>(),
@@ -26,14 +26,12 @@ namespace UnitTests
             Id = 1000
         };
 
-
-        public BeestjeServiceTests()
+        public BeestjeServiceTests(DatabaseFixture fixture)
         {
-            _modelMocks = new ModelMocks();
-            _dbMock = _modelMocks.Context;
+            _modelMocks = fixture.Mocks;
 
-            var beestjeRepository = new BeestjeRepository(_dbMock);
-            var accessoireRepository = new AccessoireRepository(_dbMock);
+            var beestjeRepository = new BeestjeRepository(fixture.Db);
+            var accessoireRepository = new AccessoireRepository(fixture.Db);
 
             _beestjeService = new BeestjeService(beestjeRepository, accessoireRepository);
         }
@@ -42,9 +40,10 @@ namespace UnitTests
         [Fact]
         public async  void CanAddGet()
         {
-            var savedBeestje = await _beestjeService.CreateBeestje(testBeestje);
+            var savedBeestje = await _beestjeService.CreateBeestje(_testBeestje);
+            
             Assert.NotNull(savedBeestje);
-            Assert.Equal(testBeestje, savedBeestje);
+            Assert.Equal(_testBeestje, savedBeestje);
         }
 
         [Fact]
@@ -52,11 +51,10 @@ namespace UnitTests
         {
             var beestjes = await _beestjeService.GetBeestjes();
             Assert.NotEmpty(beestjes);
-            Assert.Contains(_modelMocks.Beestjes[0], beestjes);
+            Assert.Equal(_modelMocks.Beestjes.Count, beestjes.Count);
         }
 
 
-        private readonly ApplicationDbContext _dbMock;
         private readonly BeestjeService _beestjeService;
     }
 }
