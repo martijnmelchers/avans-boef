@@ -93,12 +93,12 @@ namespace DomainServices
                 return beestje.Type switch
                 {
                     Type.Sneeuw when date.Month >= 6 && date.Month <= 8 => false,
-                    Type.Woestijn when date.Month >= 10 && date.Month <= 12 || date.Month >= 1 && date.Month <= 2 =>
+                    Type.Woestijn when (date.Month >= 10 && date.Month <= 12) || (date.Month >= 1 && date.Month <= 2) =>
                     false,
                     _ => true
                 };
 
-            return date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
+            return !(date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday);
         }
     }
 }

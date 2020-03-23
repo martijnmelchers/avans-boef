@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DomainServices.Interfaces;
@@ -19,8 +20,8 @@ namespace Web.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
 
         public BookingController(
-            ApplicationDbContext db, IBookingService bookingService, 
-            IBeestjeService beestjeService, SignInManager<IdentityUser> signInManager, 
+            ApplicationDbContext db, IBookingService bookingService,
+            IBeestjeService beestjeService, SignInManager<IdentityUser> signInManager,
             UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager) : base(db)
         {
             _bookingService = bookingService;
@@ -40,6 +41,9 @@ namespace Web.Controllers
                 if (booking.Step >= BookingStep.Price)
                     return RedirectToAction("ShowPricing");
 
+                if (booking.Date == DateTime.MinValue)
+                    return RedirectToAction("Index", "Home");
+
                 var data = (booking, beestjes);
                 return View("ShowAvailableBeestjes", data);
             }
@@ -56,8 +60,9 @@ namespace Web.Controllers
                 var booking = await _bookingService.GetBooking(GetAccessToken());
                 var accessoires = await _bookingService.GetAvailableAccessoires(GetAccessToken());
 
-                if (booking.Step >= BookingStep.Price)
-                    return RedirectToAction("ShowPricing");
+                var action = CheckBeforeAct(booking);
+                if (action != null)
+                    return action;
 
                 var data = (booking, accessoires);
                 return View(data);
@@ -74,13 +79,16 @@ namespace Web.Controllers
             {
                 var booking = await _bookingService.GetBooking(GetAccessToken());
 
-                if (booking.Step >= BookingStep.Price)
-                    return RedirectToAction("ShowPricing");
+                var action = CheckBeforeAct(booking);
+                if (action != null)
+                    return action;
+                
+                if (!_signInManager.IsSignedIn(User))
+                    return View("LoginOrRegister", (booking, new Register(), new Login()));
 
-                if (_signInManager.IsSignedIn(User))
-                    return RedirectToAction("ShowContactInfo");
-
-                return View("LoginOrRegister", (booking, new Register(), new Login()));
+                var user = await _userManager.GetUserAsync(User);
+                await _bookingService.LinkAccountToBooking(GetAccessToken(), user.Id);
+                return RedirectToAction("ShowContactInfo");
             }
             catch (BookingNotFoundException)
             {
@@ -94,8 +102,9 @@ namespace Web.Controllers
             {
                 var booking = await _bookingService.GetBooking(GetAccessToken());
 
-                if (booking.Step >= BookingStep.Price)
-                    return RedirectToAction("ShowPricing");
+                var action = CheckBeforeAct(booking);
+                if (action != null)
+                    return action;
 
                 if (!_signInManager.IsSignedIn(User))
                     return RedirectToAction("ShowLoginOrRegister");
@@ -116,7 +125,7 @@ namespace Web.Controllers
 
                 if (booking.Step != BookingStep.Price)
                     return booking.Step == BookingStep.Finished
-                        ? RedirectToAction("Details", new { id = booking.Id})
+                        ? RedirectToAction("Details", new { id = booking.Id })
                         : RedirectToAction("ShowContactInfo");
 
                 if (!_signInManager.IsSignedIn(User))
@@ -143,7 +152,6 @@ namespace Web.Controllers
                     return RedirectToAction("Index", "Home");
 
                 return View("Details", booking);
-
             }
             catch (BookingNotFoundException)
             {
@@ -158,23 +166,28 @@ namespace Web.Controllers
             {
                 var user = await _userManager.GetUserAsync(User);
                 var bookings = await _bookingService.GetBookingByUserId(user.Id);
-                
-                return View("Index", bookings);
 
+                return View("Index", bookings);
             }
             catch (BookingNotFoundException)
             {
                 return RedirectToAction("Index", "Home");
             }
         }
-        
-        
-        
+
+
         #region POST Actions
 
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> SelectBeestjes(List<int> selectedBeestjes)
         {
+            if (selectedBeestjes.Count == 0)
+            {
+                ModelState.AddModelError(string.Empty,"Selecteer minimaal één beestje!");
+
+                return await ShowAvailableBeestjes();
+            }
+
             try
             {
                 await _bookingService.SelectBeestjes(GetAccessToken(), selectedBeestjes);
@@ -232,12 +245,13 @@ namespace Web.Controllers
             {
                 var booking = await _bookingService.GetBooking(GetAccessToken());
                 await _bookingService.ConfirmBooking(GetAccessToken());
-                
+
                 // Remove access token, we're done!
                 RemoveAccessToken();
-                
+
                 return RedirectToAction("Details", new { id = booking.Id });
-            }  catch (BookingNotFoundException)
+            }
+            catch (BookingNotFoundException)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -291,5 +305,16 @@ namespace Web.Controllers
         }
 
         #endregion
+
+        private IActionResult CheckBeforeAct(Booking booking)
+        {
+            if (booking.Step >= BookingStep.Price)
+                return RedirectToAction("ShowPricing");
+                
+            if (booking.Date == DateTime.MinValue)
+                return RedirectToAction("Index", "Home");
+                
+            return booking.BookingBeestjes.Count == 0 ? RedirectToAction("ShowAvailableBeestjes") : null;
+        }
     }
 }

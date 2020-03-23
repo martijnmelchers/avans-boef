@@ -75,10 +75,11 @@ namespace UnitTests.Beestjes
         }
 
         [Fact]
-        public async void CanGetAvailableBeesjes()
+        public async void CanGetAvailableBeestjes()
         {
             var booking = _modelMocks.Bookings[2];
             var availableBeestjes =  await  _beestjeService.GetAvailableBeestjes(booking);
+            
             Assert.NotEmpty(availableBeestjes);
             Assert.False(availableBeestjes[8].available);
         }

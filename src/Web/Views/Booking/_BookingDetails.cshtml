@@ -31,7 +31,7 @@
                 @foreach (var beestje in Model.BookingBeestjes)
                 {
                     <div class="col-lg-4">
-                        <img src="../../images/@(beestje.Beestje.Image == string.Empty ? "http://via.placeholder.com/200?text=Geen%20foto" : beestje.Beestje.Image)" class="card-img-top" alt="Foto van @beestje.Beestje.Name"/>
+                        <img src="@(beestje.Beestje.Image == null ? "http://via.placeholder.com/200?text=Geen%20foto" : $"../../images/{beestje.Beestje.Image}")" class="card-img-top" alt="Foto van @beestje.Beestje.Name"/>
                     </div>
                 }
             </div>

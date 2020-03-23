@@ -21,7 +21,7 @@
                         {
                             <div class="col-lg-3">
                                 <div class="card mt-3">
-                                    <img src="../../images/@(beestje.Image == string.Empty ? "http://via.placeholder.com/200?text=Geen%20foto" : beestje.Image)" class="card-img-top" alt="Foto van @beestje.Name"/>
+                                    <img src="@(beestje.Image == null ? "http://via.placeholder.com/200?text=Geen%20foto" : $"../../images/{beestje.Image}")" class="card-img-top" alt="Foto van @beestje.Name"/>
                                     <div class="card-body">
                                         <h5 class="card-title text-center">@beestje.Name</h5>
                                         <div class="form-check text-center">
