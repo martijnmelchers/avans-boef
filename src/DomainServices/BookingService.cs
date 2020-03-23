@@ -153,7 +153,7 @@ namespace DomainServices
             var booking = await GetBooking(accessToken);
 
             booking.InitialPrice = (decimal) (booking.BookingBeestjes.Select(x => x.Beestje).Sum(x => x.Price) + booking.BookingAccessoires.Select(x => x.Accessoire).Sum(x => x.Price));
-            booking.Discounts = _discountService.GetDiscount(booking);
+            booking.Discounts = await _discountService.GetDiscount(booking.AccessToken);
             var totalDiscount = booking.Discounts.Sum(x => x.Percentage);
             booking.FinalPrice = booking.InitialPrice - (booking.InitialPrice / 100 * totalDiscount);
             booking.Step = BookingStep.Price;

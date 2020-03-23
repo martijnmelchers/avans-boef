@@ -76,6 +76,38 @@ namespace UnitTests.Booking
         }
 
         [Fact]
+        public async void RemovesUnselectedBeestjes()
+        {
+            var booking = await _bookingService.GetBooking(_modelMocks.Bookings[0].AccessToken);
+
+            var selectedBeestjes = new List<int>()
+            {
+                _modelMocks.Beestjes[0].Id,
+                _modelMocks.Beestjes[8].Id
+            };
+
+            await _bookingService.SelectBeestjes(booking.AccessToken, selectedBeestjes);
+            _db.SaveChanges(); // Usually controller calls savechanges but now we do it manually.
+
+
+            selectedBeestjes = new List<int>()
+            {
+                _modelMocks.Beestjes[0].Id,
+            };
+
+            await _bookingService.SelectBeestjes(booking.AccessToken, selectedBeestjes);
+            _db.SaveChanges(); // Usually controller calls savechanges but now we do it manually.
+
+
+
+            booking = await _bookingService.GetBooking(_modelMocks.Bookings[0].AccessToken);
+
+            var beestjes = booking.BookingBeestjes.Select(b => b.Beestje).ToList();
+
+            Assert.Equal(1, beestjes.Count);
+        }
+
+        [Fact]
         public async void CanSelectAccessoires()
         {
             var booking = await _bookingService.GetBooking(_modelMocks.Bookings[0].AccessToken);

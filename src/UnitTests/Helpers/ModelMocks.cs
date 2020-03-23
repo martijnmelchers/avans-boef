@@ -133,6 +133,13 @@ namespace UnitTests.Helpers
                         {
                         }
                 },
+                new Beestje()
+                {
+                    Id = 15, Name = "abcdefghijklmnopqrstuvwxyz", Type = Type.Woestijn, Price = 200, BeestjeAccessoires =
+                        new List<BeestjeAccessoires>()
+                        {
+                        }
+                },
             };
 
 
@@ -149,10 +156,6 @@ namespace UnitTests.Helpers
                     BookingAccessoires = new List<BookingAccessoires>()
                     {
                         new BookingAccessoires() { BookingId = 1, AccessoireId = 1 }
-                    },
-                    Discounts = new List<Discount>()
-                    {
-                        new Discount("Naam met de letter: a", 2),
                     },
                     InitialPrice = 203,
                     FinalPrice = 198.94m,
@@ -185,6 +188,69 @@ namespace UnitTests.Helpers
                         new BookingAccessoires() { BookingId = 3, AccessoireId = 6 }
                     },
                     Step = BookingStep.Beestjes
+                },
+
+                new Models.Booking()
+                {
+                    Id = 4,
+                    Date =  new DateTime(2020,03,22),
+                    BookingBeestjes = new List<BookingBeestje>()
+                    {
+                        new BookingBeestje() { BeestjeId = 1, BookingId = 4 }
+                    },
+                    BookingAccessoires = new List<BookingAccessoires>()
+                    {
+                        new BookingAccessoires() { BookingId = 4, AccessoireId = 1 }
+                    },
+                    InitialPrice = 203,
+                    FinalPrice = 198.94m,
+                    Step = BookingStep.Finished,
+                },
+
+                new Models.Booking() // Used for testing day discount
+                {
+                    Id = 5,
+                    Date =  new DateTime(2020,03,23),
+                    BookingBeestjes = new List<BookingBeestje>()
+                    {
+                        new BookingBeestje() { BeestjeId = 2, BookingId = 5 }
+                    },
+                    InitialPrice = 203,
+                    FinalPrice = 198.94m,
+                    Step = BookingStep.Finished,
+                },
+
+                new Models.Booking() // Used for testing max discount
+                {
+                    Id = 6,
+                    Date =  new DateTime(2020,03,23),
+                    BookingBeestjes = new List<BookingBeestje>()
+                    {
+                        new BookingBeestje() { BeestjeId = 15, BookingId = 6 }
+                    },
+                    BookingAccessoires = new List<BookingAccessoires>()
+                    {
+                    },
+                    InitialPrice = 203,
+                    FinalPrice = 198.94m,
+                    Step = BookingStep.Finished,
+                },
+
+                new Models.Booking() // Used for testing name discount.
+                {
+                    Id = 7,
+                    Date =  new DateTime(2020,03,22),
+                    BookingBeestjes = new List<BookingBeestje>()
+                    {
+                        new BookingBeestje() { BeestjeId = 1, BookingId = 7 }
+                    },
+                    BookingAccessoires = new List<BookingAccessoires>()
+                    {
+                        new BookingAccessoires() { BookingId = 7, AccessoireId = 1 }
+                    },
+                    InitialPrice = 203,
+                    FinalPrice = 198.94m,
+                    Step = BookingStep.Finished,
                 },
             };
 

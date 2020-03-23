@@ -8,6 +8,6 @@ namespace DomainServices.Interfaces
 {
     public interface IDiscountService
     {
-        List<Discount> GetDiscount(Booking booking);
+        Task<List<Discount>> GetDiscount(string accessToken);
     }
 }
