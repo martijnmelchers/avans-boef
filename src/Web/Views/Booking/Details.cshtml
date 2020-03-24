@@ -11,42 +11,39 @@
             <div class="card-header">
                 <h4>Boeking details</h4>
             </div>
-            @using (Html.BeginForm("AddDetailsAndCalculatePrice", "Booking", FormMethod.Post))
-            {
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-6">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
 
-                            <h5>Beestjes</h5>
-                            <ul>
-                                @foreach (var beestje in Model.BookingBeestjes)
-                                {
-                                    <li>@beestje.Beestje.Name (@beestje.Beestje.Price.ToString("C"))</li>
-                                }
-                            </ul>
+                        <h5>Beestjes</h5>
+                        <ul>
+                            @foreach (var beestje in Model.BookingBeestjes)
+                            {
+                                <li>@beestje.Beestje.Name (@beestje.Beestje.Price.ToString("C"))</li>
+                            }
+                        </ul>
 
-                            <h5>Accessoires</h5>
-                            <ul>
-                                @foreach (var accessoire in Model.BookingAccessoires)
-                                {
-                                    <li>@accessoire.Accessoire.Name (@accessoire.Accessoire.Price.ToString("C"))</li>
-                                }
-                            </ul>
+                        <h5>Accessoires</h5>
+                        <ul>
+                            @foreach (var accessoire in Model.BookingAccessoires)
+                            {
+                                <li>@accessoire.Accessoire.Name (@accessoire.Accessoire.Price.ToString("C"))</li>
+                            }
+                        </ul>
 
-                            <h5>Kortingen</h5>
-                            <ul>
-                                @foreach (var discount in Model.Discounts)
-                                {
-                                    <li>@discount.Reason (@discount.Percentage% korting)</li>
-                                }
-                            </ul>
-                            
-                            <p>Subtotaal: <b>@Model.InitialPrice.ToString("C")</b></p>
-                            <p>Totaal incl. korting: <b>@Model.FinalPrice.ToString("C")</b></p>
-                        </div>
+                        <h5>Kortingen</h5>
+                        <ul>
+                            @foreach (var discount in Model.Discounts)
+                            {
+                                <li>@discount.Reason (@discount.Percentage% korting)</li>
+                            }
+                        </ul>
+
+                        <p>Subtotaal: <b>@Model.InitialPrice.ToString("C")</b></p>
+                        <p>Totaal incl. korting: <b>@Model.FinalPrice.ToString("C")</b></p>
                     </div>
                 </div>
-            }
+            </div>
         </div>
     </div>
     <div class="col-lg-3">

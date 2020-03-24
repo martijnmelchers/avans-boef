@@ -175,6 +175,25 @@ namespace Web.Controllers
             }
         }
 
+        [Authorize]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var booking = await _bookingService.GetBookingById(id);
+                var user = await _userManager.GetUserAsync(User);
+
+                if (booking.UserId != user.Id)
+                    return RedirectToAction("Index", "Home");
+
+                return View("Delete", booking);
+            }
+            catch (BookingNotFoundException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
 
         #region POST Actions
 
@@ -250,6 +269,27 @@ namespace Web.Controllers
                 RemoveAccessToken();
 
                 return RedirectToAction("Details", new { id = booking.Id });
+            }
+            catch (BookingNotFoundException)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> ConfirmDelete(int id)
+        {
+            try
+            {
+                var booking = await _bookingService.GetBookingById(id);
+                var user = await _userManager.GetUserAsync(User);
+
+                if (booking.UserId != user.Id)
+                    return RedirectToAction("Index", "Home");
+
+                await _bookingService.Delete(id);
+
+                return RedirectToAction("Index");
             }
             catch (BookingNotFoundException)
             {

@@ -20,5 +20,6 @@ namespace DomainServices.Interfaces
         Task ConfirmBooking(string getAccessToken);
         Task<Booking> GetBookingById(int id);
         Task<List<Booking>> GetBookingByUserId(string userId);
+        Task Delete(int id);
     }
 }

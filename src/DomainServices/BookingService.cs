@@ -203,5 +203,10 @@ namespace DomainServices
 
             return availableAccessoires;
         }
+
+        public async Task Delete(int id)
+        {
+            await _bookingRepository.Delete(id);
+        }
     }
 }

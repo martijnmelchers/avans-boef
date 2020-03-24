@@ -58,7 +58,7 @@ namespace DomainServices
             if (beestjes.FirstOrDefault(b => b.Name == "Eend") == null)
                 return null;
             
-            return new Random().Next(0, 5) == 0 ? null : new Discount("1 op 6 kans met naam: Eend", 50);
+            return new Random().Next(0, 5) == 0 ? new Discount("1 op 6 kans met naam: Eend", 50) : null;
         }
 
         private static IEnumerable<Discount> GetCharDiscount(Booking booking)
