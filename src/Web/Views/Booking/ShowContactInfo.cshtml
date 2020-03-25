@@ -14,6 +14,7 @@
             @using (Html.BeginForm("AddDetailsAndCalculatePrice", "Booking", FormMethod.Post))
             {
                 <div class="card-body">
+                    @Html.ValidationSummary(true, "Er ging iets niet goed!", new { @class = "alert alert-danger no-list" })
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">

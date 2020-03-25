@@ -244,6 +244,12 @@ namespace Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> AddDetailsAndCalculatePrice(ContactInfo contactInfo)
         {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError(string.Empty, "Naam en adres zijn verplicht! Check of je correcte informatie hebt ingevuld!");
+                return await ShowContactInfo();
+            }
+            
             try
             {
                 await _bookingService.SaveContactInfo(GetAccessToken(), contactInfo);
@@ -300,6 +306,12 @@ namespace Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(Login login)
         {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError(string.Empty, "Vul je wachtwoord en/of gebruikersnaam in");
+                return await ShowLoginOrRegister();
+            }
+
             var result = await _signInManager.PasswordSignInAsync(login.Email, login.Password, false, false);
             if (result.Succeeded)
             {
@@ -317,6 +329,12 @@ namespace Web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(Register register)
         {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError(string.Empty, "Corrigeer je gegevens aub!");
+                return await ShowLoginOrRegister();
+            }
+            
             var result =
                 await _userManager.CreateAsync(new IdentityUser { UserName = register.Email, Email = register.Email },
                     register.Password);
